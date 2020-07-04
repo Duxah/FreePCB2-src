@@ -1,0 +1,117 @@
+﻿Построение начато 05.07.2020 3:38:22.
+     1>Проект "C:\Users\Duxah\Desktop\Duxah\FreePcbDoc\FreePCB_Dev2032\FreePCB_Dev\FreePcb.vcxproj" в узле 2 (целевые объекты build).
+     1>InitializeBuildStatus:
+         Создание ".\Debug\FreePcb.unsuccessfulbuild", так как было задано "AlwaysCreate".
+       ClCompile:
+         Для всех выходных данных обновления не требуется.
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I./include /ZI /nologo /W1 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _VC80_UPGRADE=0x0710 /D _MBCS /D _AFXDLL /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp".\Debug/FreePcb.pch" /Fo".\Debug/" /Fd".\Debug/vc100.pdb" /FR".\Debug\\" /Gd /TP /analyze- /errorReport:prompt DlgAddPart.cpp /D "_CRT_SECURE_NO_DEPRECATE" 
+         DlgAddPart.cpp
+       ResourceCompile:
+         Для всех выходных данных обновления не требуется.
+       ManifestResourceCompile:
+         Для всех выходных данных обновления не требуется.
+       Link:
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:".\Debug/FreePcb.exe" /VERSION:"1.109" /INCREMENTAL /NOLOGO /LIBPATH:./libs/Debug winmm.lib rpcrt4.lib clibpdf.lib /MANIFEST /ManifestFile:".\Debug\FreePcb.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:".\Debug/FreePcb.pdb" /MAP /SUBSYSTEM:WINDOWS /STACK:"100000000" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\Debug\FreePcb.lib" /MACHINE:X86 .\Debug\FreePcb.res
+         .\Debug\FreePcb.exe.embed.manifest.res
+         .\Debug/afxasert.obj
+         .\Debug/Cuid.obj
+         .\Debug/DesignRules.obj
+         .\Debug/DisplayList.obj
+         .\Debug/DlgAddArea.obj
+         .\Debug/DlgAddMaskCutout.obj
+         .\Debug/DlgAddMerge.obj
+         .\Debug/DlgAddNet.obj
+         .\Debug/DlgAddPart.obj
+         .\Debug/DlgAddPin.obj
+         .\Debug/DlgAddPoly.obj
+         .\Debug/DlgAddText.obj
+         .\Debug/DlgAddWidth.obj
+         .\Debug/DlgAreaLayer.obj
+         .\Debug/DlgAssignNet.obj
+         .\Debug/DlgCAD.obj
+         .\Debug/DlgCentroid.obj
+         .\Debug/DlgChangeLayer.obj
+         .\Debug/DlgChooseNetName.obj
+         .\Debug/DlgDRC.obj
+         .\Debug/DlgDupFootprintName.obj
+         .\Debug/DlgEditBoardCorner.obj
+         .\Debug/DlgEditNet.obj
+         .\Debug/DlgExportDsn.obj
+         .\Debug/DlgFindPart.obj
+         .\Debug/DlgFpRefText.obj
+         .\Debug/DlgFpText.obj
+         .\Debug/DlgGlue.obj
+         .\Debug/DlgGroupPaste.obj
+         .\Debug/DlgHole.obj
+         .\Debug/DlgImportFootprint.obj
+         .\Debug/DlgImportOptions.obj
+         .\Debug/DlgImportSes.obj
+         .\Debug/DlgIndexing.obj
+         .\Debug/DlgIvex.obj
+         .\Debug/DlgLayers.obj
+         .\Debug/DlgLibraryManager.obj
+         .\Debug/DlgLog.obj
+         .\Debug/DlgMoveOrigin.obj
+         .\Debug/DlgMyMessageBox.obj
+         .\Debug/DlgMyMessageBox2.obj
+         .\Debug/DlgNetCombine.obj
+         .\Debug/DlgNetlist.obj
+         .\Debug/DlgPartlist.obj
+         .\Debug/DlgProjectOptions.obj
+         .\Debug/DlgReassignLayers.obj
+         .\Debug/DlgRefText.obj
+         .\Debug/DlgReport.obj
+         .\Debug/DlgSaveFootprint.obj
+         .\Debug/DlgSaveLib.obj
+         .\Debug/DlgSetAreaHatch.obj
+         .\Debug/DlgSetSegmentWidth.obj
+         .\Debug/DlgSetTraceWidths.obj
+         .\Debug/DlgShortcuts.obj
+         .\Debug/DlgSideStyle.obj
+         .\Debug/DlgSlot.obj
+         .\Debug/DlgValueText.obj
+         .\Debug/DlgVia.obj
+         .\Debug/DlgWizQuad.obj
+         .\Debug/file_io.obj
+         .\Debug/FootprintLib.obj
+         .\Debug/FootprintView.obj
+         .\Debug/FreePcb.obj
+         .\Debug/FreePcbDoc.obj
+         .\Debug/FreePcbView.obj
+         .\Debug/Gerber.obj
+         .\Debug/gpc_232.obj
+         .\Debug/ivex_mod_file.obj
+         .\Debug/MainFrm.obj
+         .\Debug/MyToolBar.obj
+         .\Debug/Net_iter.obj
+         .\Debug/NetList.obj
+         .\Debug/PartList.obj
+         .\Debug/PathDialog.obj
+         .\Debug/php_polygon.obj
+         .\Debug/php_polygon_vertex.obj
+         .\Debug/PolyLine.obj
+         .\Debug/QAFDebug.obj
+         .\Debug/RTcall.obj
+         .\Debug/Shape.obj
+         .\Debug/smcharacter.obj
+         .\Debug/smfontutil.obj
+         .\Debug/StdAfx.obj
+         .\Debug/TextList.obj
+         .\Debug/UndoList.obj
+         .\Debug/utility.obj /MACHINE:I386 
+       Manifest:
+         c:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:".\Debug\FreePcb.exe.embed.manifest" /manifest .\Debug\FreePcb.exe.intermediate.manifest "c:\Program Files\Microsoft Visual Studio 10.0\VC\Include\Manifest\dpiaware.manifest"
+         Для всех выходных данных обновления не требуется.
+       LinkEmbedManifest:
+         Для всех выходных данных обновления не требуется.
+         FreePcb.vcxproj -> C:\Users\Duxah\Desktop\Duxah\FreePcbDoc\FreePCB_Dev2032\FreePCB_Dev\.\Debug\FreePcb.exe
+       BscMake:
+         Для всех выходных данных обновления не требуется.
+       FinalizeBuildStatus:
+         Файл ".\Debug\FreePcb.unsuccessfulbuild" удаляется.
+         Обращение к ".\Debug\FreePcb.lastbuildstate".
+     1>Построение проекта "C:\Users\Duxah\Desktop\Duxah\FreePcbDoc\FreePCB_Dev2032\FreePCB_Dev\FreePcb.vcxproj" завершено (целевые объекты build).
+
+Построение успешно завершено.
+
+Затраченное время: 00:00:09.10

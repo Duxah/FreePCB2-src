@@ -1,0 +1,72 @@
+//---------------------------------------------------------------------------
+
+
+#pragma hdrstop
+
+#include "Enquary.h"
+
+//---------------------------------------------------------------------------
+
+#pragma package(smart_init)
+
+
+enquary
+
+bool JUMP (AnsiString Ref)
+{
+if (!Ref.Length())      return false;
+if (!FileName.Length()) return false;
+AnsiString Pin="", sx="", sy="", sw="";
+int p = Ref.Pos(".");
+if (p > 0)
+        {
+        Pin = Ref.SubString((p+1),(Ref.Length()-p));
+        Ref = Ref.SubString(1,(p-1));
+        if (Ref.Pos(".") > 0) return false;
+        }
+if( Ref.SubString(1,4) == "Via¹" )
+        {
+        Ref = "*DL_CIRC#";
+        sx = Form1->StringGridPins->Cells[def_Xpi][Form1->StringGridPins->Row];
+        sy = Form1->StringGridPins->Cells[def_Ypi][Form1->StringGridPins->Row];
+        sw = Form1->StringGridPins->Cells[def_W][Form1->StringGridPins->Row];
+        float x = StrToFloat(Str_Float_Format( sx ));
+        float y = StrToFloat(Str_Float_Format( sy ));
+        float w = StrToFloat(Str_Float_Format( sw ));
+        sx = F_str( x );
+        sy = F_str( y );
+        sw = F_str( w );
+        int pos = sx.Pos(",");
+        if( pos > 0 )
+                sx[pos] = '.';
+        pos = sy.Pos(",");
+        if( pos > 0 )
+                sy[pos] = '.';
+        pos = sw.Pos(",");
+        if( pos > 0 )
+                sw[pos] = '.';
+        }
+HWND FreePCB = FindWindow( NULL,WindowHeader.c_str());
+if (FreePCB)
+        {
+        char data[CDS_SHORT_MAX_LEN];
+        AnsiString mes = "jump: \"" + Ref + "\"";
+        if (Pin.Length())
+                mes += AnsiString(" \"" + Pin + "\"");
+        if (sx.Length())
+                mes += AnsiString(" \"" + sx + "\"");
+        if (sy.Length())
+                mes += AnsiString(" \"" + sy + "\"");
+        if (sw.Length())
+                mes += AnsiString(" \"" + sw + "\"");
+        int len = MIN(mes.Length(),(CDS_SHORT_MAX_LEN-1));
+        data[len] = '\0';
+        for (int cp=(len-1); cp>=0; cp--)
+                data[cp] = mes[cp+1];
+        CDS_SHORT.lpData = data;
+        CDS_SHORT.cbData = len+1;
+        SendMessageA(FreePCB, WM_COPYDATA, 0, (LPARAM)&CDS_SHORT);
+        }
+return true;
+}
+

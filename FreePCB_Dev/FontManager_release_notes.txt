@@ -1,0 +1,10 @@
+FontManager - release notes
+
+v 1.0
+-----
+
+This application allows editing of the Hershey font files which are used in FreePCB. It was taken from the following article on CodeProject.
+
+http://www.codeproject.com/gdi/hersheyfont.asp
+
+Bruce Parham modified the code so that the application looks for the font files in the folder that it was opened from, instead of using an absolute path.

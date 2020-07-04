@@ -1,0 +1,360 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Template|Win32">
+      <Configuration>Template</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{48B16142-FBCE-4203-996C-8DEC8AAE6546}</ProjectGuid>
+    <RootNamespace>FreePcb</RootNamespace>
+    <Keyword>MFCProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\Debug\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateManifest>
+    <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</EmbedManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\Release\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Debug/FreePcb.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/D "_CRT_SECURE_NO_DEPRECATE" %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>./include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>.\Debug/FreePcb.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Debug/</AssemblerListingLocation>
+      <ObjectFileName>.\Debug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug/</ProgramDataBaseFileName>
+      <BrowseInformation>true</BrowseInformation>
+      <WarningLevel>Level1</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_AFXDLL;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>winmm.lib;rpcrt4.lib;clibpdf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\Debug/FreePcb.exe</OutputFile>
+      <Version>1.109</Version>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>./libs/Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\Debug/FreePcb.pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <SubSystem>Windows</SubSystem>
+      <StackReserveSize>100000000</StackReserveSize>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Release/FreePcb.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/D "_CRT_SECURE_NO_DEPRECATE" %(AdditionalOptions)</AdditionalOptions>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>./include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>.\Release/FreePcb.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Release/</AssemblerListingLocation>
+      <ObjectFileName>.\Release/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release/</ProgramDataBaseFileName>
+      <WarningLevel>Level1</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_AFXDLL;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>winmm.lib;rpcrt4.lib;clibpdf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\Release/FreePcb.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>./libs/Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ProgramDatabaseFile>.\Release/FreePcb.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="afxasert.cpp" />
+    <ClCompile Include="Cuid.cpp" />
+    <ClCompile Include="DesignRules.cpp" />
+    <ClCompile Include="DisplayList.cpp" />
+    <ClCompile Include="DlgAddArea.cpp" />
+    <ClCompile Include="DlgAddMaskCutout.cpp" />
+    <ClCompile Include="DlgAddMerge.cpp" />
+    <ClCompile Include="DlgAddNet.cpp" />
+    <ClCompile Include="DlgAddPart.cpp" />
+    <ClCompile Include="DlgAddPin.cpp" />
+    <ClCompile Include="DlgAddPoly.cpp" />
+    <ClCompile Include="DlgAddText.cpp" />
+    <ClCompile Include="DlgAddWidth.cpp" />
+    <ClCompile Include="DlgAreaLayer.cpp" />
+    <ClCompile Include="DlgAssignNet.cpp" />
+    <ClCompile Include="DlgCAD.cpp" />
+    <ClCompile Include="DlgCentroid.cpp" />
+    <ClCompile Include="DlgChangeLayer.cpp" />
+    <ClCompile Include="DlgChooseNetName.cpp" />
+    <ClCompile Include="DlgDRC.cpp" />
+    <ClCompile Include="DlgDupFootprintName.cpp" />
+    <ClCompile Include="DlgEditBoardCorner.cpp" />
+    <ClCompile Include="DlgEditNet.cpp" />
+    <ClCompile Include="DlgExportDsn.cpp" />
+    <ClCompile Include="DlgFindPart.cpp" />
+    <ClCompile Include="DlgFpRefText.cpp" />
+    <ClCompile Include="DlgFpText.cpp" />
+    <ClCompile Include="DlgGlue.cpp" />
+    <ClCompile Include="DlgGroupPaste.cpp" />
+    <ClCompile Include="DlgHole.cpp" />
+    <ClCompile Include="DlgImportFootprint.cpp" />
+    <ClCompile Include="DlgImportOptions.cpp" />
+    <ClCompile Include="DlgImportSes.cpp" />
+    <ClCompile Include="DlgIndexing.cpp" />
+    <ClCompile Include="DlgIvex.cpp" />
+    <ClCompile Include="DlgLayers.cpp" />
+    <ClCompile Include="DlgLibraryManager.cpp" />
+    <ClCompile Include="DlgLog.cpp" />
+    <ClCompile Include="DlgMoveOrigin.cpp" />
+    <ClCompile Include="DlgMyMessageBox.cpp" />
+    <ClCompile Include="DlgMyMessageBox2.cpp" />
+    <ClCompile Include="DlgNetCombine.cpp" />
+    <ClCompile Include="DlgNetlist.cpp" />
+    <ClCompile Include="DlgPartlist.cpp" />
+    <ClCompile Include="DlgProjectOptions.cpp" />
+    <ClCompile Include="DlgReassignLayers.cpp" />
+    <ClCompile Include="DlgRefText.cpp" />
+    <ClCompile Include="DlgReport.cpp" />
+    <ClCompile Include="DlgSaveFootprint.cpp" />
+    <ClCompile Include="DlgSaveLib.cpp" />
+    <ClCompile Include="DlgSetAreaHatch.cpp" />
+    <ClCompile Include="DlgSetSegmentWidth.cpp" />
+    <ClCompile Include="DlgSetTraceWidths.cpp" />
+    <ClCompile Include="DlgShortcuts.cpp" />
+    <ClCompile Include="DlgSideStyle.cpp" />
+    <ClCompile Include="DlgSlot.cpp" />
+    <ClCompile Include="DlgValueText.cpp" />
+    <ClCompile Include="DlgVia.cpp" />
+    <ClCompile Include="DlgWizQuad.cpp" />
+    <ClCompile Include="file_io.cpp" />
+    <ClCompile Include="FootprintLib.cpp" />
+    <ClCompile Include="FootprintView.cpp" />
+    <ClCompile Include="FreePcb.cpp" />
+    <ClCompile Include="FreePcbDoc.cpp" />
+    <ClCompile Include="FreePcbView.cpp" />
+    <ClCompile Include="Gerber.cpp" />
+    <ClCompile Include="gpc_232.cpp" />
+    <ClCompile Include="ivex_mod_file.cpp" />
+    <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="MyToolBar.cpp" />
+    <ClCompile Include="Net_iter.cpp" />
+    <ClCompile Include="NetList.cpp" />
+    <ClCompile Include="PartList.cpp" />
+    <ClCompile Include="PathDialog.cpp" />
+    <ClCompile Include="php_polygon.cpp" />
+    <ClCompile Include="php_polygon_vertex.cpp" />
+    <ClCompile Include="PolyLine.cpp" />
+    <ClCompile Include="QAFDebug.cpp" />
+    <ClCompile Include="RTcall.cpp" />
+    <ClCompile Include="Shape.cpp" />
+    <ClCompile Include="smcharacter.cpp" />
+    <ClCompile Include="smfontutil.cpp" />
+    <ClCompile Include="StdAfx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="TextList.cpp" />
+    <ClCompile Include="UndoList.cpp" />
+    <ClCompile Include="utility.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DlgAddMerge.h" />
+    <ClInclude Include="DlgAddPoly.h" />
+    <ClInclude Include="Cuid.h" />
+    <ClInclude Include="DdlgNetCombine.h" />
+    <ClInclude Include="DesignRules.h" />
+    <ClInclude Include="DisplayList.h" />
+    <ClInclude Include="DlgAddArea.h" />
+    <ClInclude Include="DlgAddMaskCutout.h" />
+    <ClInclude Include="DlgAddNet.h" />
+    <ClInclude Include="DlgAddPart.h" />
+    <ClInclude Include="DlgAddPin.h" />
+    <ClInclude Include="DlgAddText.h" />
+    <ClInclude Include="DlgAddWidth.h" />
+    <ClInclude Include="DlgAreaLayer.h" />
+    <ClInclude Include="DlgAssignNet.h" />
+    <ClInclude Include="DlgCAD.h" />
+    <ClInclude Include="DlgCentroid.h" />
+    <ClInclude Include="DlgChangeLayer.h" />
+    <ClInclude Include="DlgChooseNetName.h" />
+    <ClInclude Include="DlgDRC.h" />
+    <ClInclude Include="DlgDupFootprintName.h" />
+    <ClInclude Include="DlgEditBoardCorner.h" />
+    <ClInclude Include="DlgEditNet.h" />
+    <ClInclude Include="DlgExportDsn.h" />
+    <ClInclude Include="DlgFindPart.h" />
+    <ClInclude Include="DlgFpRefText.h" />
+    <ClInclude Include="DlgFpText.h" />
+    <ClInclude Include="DlgGlue.h" />
+    <ClInclude Include="DlgGroupPaste.h" />
+    <ClInclude Include="DlgImportFootprint.h" />
+    <ClInclude Include="DlgImportOptions.h" />
+    <ClInclude Include="DlgImportSes.h" />
+    <ClInclude Include="DlgIndexing.h" />
+    <ClInclude Include="DlgIvex.h" />
+    <ClInclude Include="DlgLayers.h" />
+    <ClInclude Include="DlgLibraryManager.h" />
+    <ClInclude Include="DlgLog.h" />
+    <ClInclude Include="DlgMoveOrigin.h" />
+    <ClInclude Include="DlgMyMessageBox.h" />
+    <ClInclude Include="DlgMyMessageBox2.h" />
+    <ClInclude Include="DlgNetCombine.h" />
+    <ClInclude Include="DlgNetlist.h" />
+    <ClInclude Include="DlgPartlist.h" />
+    <ClInclude Include="DlgProjectOptions.h" />
+    <ClInclude Include="DlgReassignLayers.h" />
+    <ClInclude Include="DlgRefText.h" />
+    <ClInclude Include="DlgReport.h" />
+    <ClInclude Include="DlgSaveFootprint.h" />
+    <ClInclude Include="DlgSaveLib.h" />
+    <ClInclude Include="DlgSetAreaHatch.h" />
+    <ClInclude Include="DlgSetSegmentWidth.h" />
+    <ClInclude Include="DlgSetTraceWidths.h" />
+    <ClInclude Include="DlgShortcuts.h" />
+    <ClInclude Include="DlgSideStyle.h" />
+    <ClInclude Include="DlgSlot.h" />
+    <ClInclude Include="DlgValueText.h" />
+    <ClInclude Include="DlgVia.h" />
+    <ClInclude Include="DlgWizQuad.h" />
+    <ClInclude Include="file_io.h" />
+    <ClInclude Include="FootprintLib.h" />
+    <ClInclude Include="FootprintView.h" />
+    <ClInclude Include="FreePcb.h" />
+    <ClInclude Include="FreePcbDoc.h" />
+    <ClInclude Include="FreePcbView.h" />
+    <ClInclude Include="Gerber.h" />
+    <ClInclude Include="gpc_232.h" />
+    <ClInclude Include="ids.h" />
+    <ClInclude Include="ivex_mod_file.h" />
+    <ClInclude Include="layers.h" />
+    <ClInclude Include="LinkList.h" />
+    <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="Merge.h" />
+    <ClInclude Include="MyToolBar.h" />
+    <ClInclude Include="NetList.h" />
+    <ClInclude Include="PartList.h" />
+    <ClInclude Include="PathDialog.h" />
+    <ClInclude Include="php_polygon.h" />
+    <ClInclude Include="php_polygon_vertex.h" />
+    <ClInclude Include="PolyLine.h" />
+    <ClInclude Include="QAFDebug.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="resource1.h" />
+    <ClInclude Include="RTcall.h" />
+    <ClInclude Include="Shape.h" />
+    <ClInclude Include="smcharacter.h" />
+    <ClInclude Include="smfontutil.h" />
+    <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="TextList.h" />
+    <ClInclude Include="UndoList.h" />
+    <ClInclude Include="utility.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="FreePcb.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="default_font.txt" />
+    <None Include="resource.hm" />
+    <None Include="res\bga.bmp" />
+    <None Include="res\bitmap_d.bmp" />
+    <None Include="res\edge.bmp" />
+    <None Include="res\edge2.bmp" />
+    <None Include="res\FreePcb.ico" />
+    <None Include="res\FreePcb.rc2" />
+    <None Include="res\FreePcbDoc.ico" />
+    <None Include="res\header.bmp" />
+    <None Include="res\header2.bmp" />
+    <None Include="res\icon1.ico" />
+    <None Include="res\icon2.ico" />
+    <None Include="res\MyToolbar.bmp" />
+    <None Include="res\quad.bmp" />
+    <None Include="res\sip.bmp" />
+    <None Include="res\SMT dip.bmp" />
+    <None Include="res\Toolbar.bmp" />
+    <None Include="changelog.txt" />
+    <None Include="FreePCB_release_notes.txt" />
+    <None Include="FreePCB_todo_list.txt" />
+    <None Include="notes.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="FreePcb.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

@@ -1,0 +1,34 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: FreePcb - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\WINDOWS\TEMP\RSP50F5.TMP" with contents
+[
+/nologo /o"Debug/FreePcb.bsc" 
+.\Debug\StdAfx.sbr
+.\Debug\DisplayList.sbr
+.\Debug\file_io.sbr
+.\Debug\FreePcb.sbr
+.\Debug\FreePcbDoc.sbr
+.\Debug\FreePcbView.sbr
+.\Debug\MainFrm.sbr
+.\Debug\NetList.sbr
+.\Debug\PartList.sbr
+.\Debug\PcbFont.sbr
+.\Debug\Shape.sbr
+.\Debug\utility.sbr]
+Creating command line "bscmake.exe @C:\WINDOWS\TEMP\RSP50F5.TMP"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+FreePcb.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

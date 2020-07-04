@@ -1,0 +1,14 @@
+List of possible new features for FreePCB:
+
+- rulers
+- move origin in footprint editor
+- group copy and paste
+- combine multiple trace segments into one if possible
+- remove zero-length trace segments
+- incorporate autorouter (mucs-pcb ?)
+- clean up gerbers
+- apply clearances to copper areas in project
+- remove orphan copper and thin slivers of copper
+- "dog-leg" router
+- statistics dialog and file
+- ideas from User Forum

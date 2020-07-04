@@ -1,0 +1,192 @@
+// FreePCB : programming notes
+//
+
+Classes:
+
+	CFreePcbApp:
+		- defined in file FreePcb.h, implemented in file FreePcb.cpp 
+		- this is the Windows application
+		- it contains instances of CFreePcbDoc and CFreePcbView (see below)
+
+	CFreePcbDoc:
+		- defined in file FreePcbDoc.h, implemented in file FreePcbDoc.cpp 
+		- in the Microsoft "Document-View" architecture, this is the Document
+		- it contains all of the data structures representing the PCB layout
+		
+	CFreePcbView:
+		- defined in file FreePcbView.h, implemented in file FreePcbView.cpp 
+		- in the Microsoft "Document-View" architecture, this is the View
+		- it handles the user interface and draws the PCB layout, using data
+			from the CFreePcbDoc
+			
+	id:
+		- common name "id"
+		- defined in file ids.h, implemented in file ids.cpp 
+		- represents a "tag" that identifies items in the PCB design
+		- it is used to identify items that have been selected, and to tag 
+			graphic elements for picking by mouse-clicking
+			
+	CPolyLine:
+		- common name "polyline" or "polygon"
+		- defined in file PolyLine.h and implemented in file PolyLine.cpp
+		- represents an open or closed polyline (a closed polyline is a polygon)
+		- contains arrays of corner positions and side-styles, where a side-style 
+			may be a straight line or a clockwise or counterclockwise arc
+		- a closed polyline may contain multiple contours, where the first contour 
+			is the external outline and subsequent contours represent "holes"
+
+	pad:
+		- common name "pad"
+		- defined in file Shape.h, implemented in file Shape.cpp 
+		- represents a copper pad in a padstack
+		
+	padstack:
+		- common name "padstack"
+		- defined in file Shape.h, implemented in file Shape.cpp 
+		- represents a stack of pads for a single pin in a footprint
+		- contains pads for the top, bottom and inner copper layers
+		
+	CShape:
+		- common name "footprint"
+		- defined in file Shape.h, implemented in file Shape.cpp 
+		- represents a footprint
+		- footprints are identified by name, such as "DIP20" or "DSUB-25-male-RA"
+		- CShape data will generally be loaded from a library or project file 
+		- contains an array of padstacks, one for each pin in the footprint
+		- contains an array of CPolyLines for the footprint's graphic representation
+			on the silkscreen layer
+
+	part_pin:
+		- common name "pin" or "part pin"
+		- defined in file PartList.h, implemented in file PartList.cpp 
+		- this class represents a single pin of a part
+		- it contains a pointer to the cnet that the pin is connected to (or NULL)
+
+	cpart:
+		- common name "part"
+		- defined in file PartList.h, implemented in file PartList.cpp 
+		- represents a single part
+		- identified by a reference designator such as "U23"
+		- may be accessed by id, reference designator, or a pointer to its address
+		- contains a pointer to the CShape object of its footprint
+		- contains positioning and status information required for drawing
+		- contains an array of part_pins (one for each pin)
+		- each padstack contains a pointer to the net attached to that pin
+			
+	CPartList:
+		- common name "part list"
+		- defined in file PartList.h, implemented in file PartList.cpp 
+		- this contains all of the cparts in the design
+		- it is implemented as a linked lists of cparts
+		- cparts in the part list are drawn by adding their graphic
+			elements to the display list, which handles all drawing to the layout
+			area of the application window (see below)
+		- since many of the operations on parts require access to the netlist,
+			it contains a pointer to the CNetList object for the project
+			
+	cpin:
+		- common name "pin" or "net pin"
+		- defined in file NetList.h, implemented if file NetList.cpp
+		- represents a single pin in a net
+		- contains a pointer to the cpart for the pin
+		
+	cseg:
+		- common name "trace segment" (if routed) or "ratline" (if unrouted)
+		- defined in file NetList.h, implemented if file NetList.cpp
+		- represents a single routed or unrouted segment of a trace
+		
+	cvertex:
+		- common name "vertex" or "via"
+		- defined in file NetList.h, implemented if file NetList.cpp
+		- represents a single vertex between csegs in a trace
+		- if the csegs are on different layers, defines a via between them
+		
+	cconnect:
+		- common name "connection" or "trace"
+		- defined in file NetList.h, implemented if file NetList.cpp
+		- represents a single trace or ratline connecting two cpins in a net
+		- the start and end pin are represented as indexes into the array of cpins
+			in the cnet
+		- contains an arrays of csegs and an array of cvertexes
+		
+	carea:
+		- common name "copper area"
+		- defined in file NetList.h, implemented if file NetList.cpp
+		- represent a single copper area attached to a net
+		- contains a CPolyLine which actually defines the area
+		- contains an array of indexes into the pin array for the cnet,
+			defining all of the pins that connect to it
+
+	cnet:
+		- common name "net"
+		- defined in file NetList.h, implemented if file NetList.cpp
+		- represents a single net
+		- identified by a name, which is a unique string such as "GND"
+		- contains an array of pins, where each pin has a part ref and a pin number,
+			such as "U23.6" for pin 6 of part U23
+		- each pin includes a pointer to the part for that pin
+		- contains an array of cconnects that define connections between pins
+		- contains an array of copper areas
+
+	CNetList:
+		- common name "net list"
+		- defined in file NetList.h, implemented in NetList.cpp
+		- this is a map of all of the nets in a design
+		- since many of the operations on nets require access to the part list,
+			it contains a pointer to the CPartList object for the project
+
+	dl_element:
+		- common name "graphic element"
+		- defined in file CDisplayList.h
+		- this is a structure which describes a primitive graphic element such
+			as a line, rectangle, circle, etc.
+		- all drawing into the layout area of the window consists of these
+			elements, which are placed into a display list (see below)
+		- each element is assigned to a drawing layer (such as TOP_SILKSCREEN, etc.)
+
+	CDisplayList:
+		- common name "display list"
+		- defined in file DisplayList.h, implemented in file DisplayList.cpp 
+		- this is a linked list of graphic elements which make up the PCB drawing
+		- each element is identified by the id of the item that it represents
+		- an item may be erased from the screen by removing all of the 
+			graphic elements from the display list which have the item's id,
+			then redrawing
+
+
+Some examples of information flow:
+
+	- when starting the application:
+		- a CDisplayList is created
+		- a CPartList is created
+		- a CNetList is created
+		- pointers to the CDisplayList and CNetList are passed to the CPartList
+		- pointers to the CDisplayList and CPartList are passed to the CNetList
+			
+	- when opening a project:
+		- the project file is read
+		- all cparts are added to the CPartList (see below) 
+		- all cnets are added to the CNetList (see below)
+			
+	- when adding a part:
+		- a cpart is created
+		- if the footprint of the part doesn't already exist in the design, it is
+			imported from a library and a CShape created
+		- a pointer to the CShape is passed to the cpart
+		- the cpart is added to CPartList
+		- CPartList draws the part by adding its graphic elements to the display list
+		- each graphic element is identified by the id of the part
+		- CDisplayList draws the graphic elements on the screen, thereby drawing the
+			part
+		- graphic elements drawn to the SELECTION layer are usually invisible, and
+			are used for selecting parts (see below)
+
+	- when the user selects a part by clicking the mouse button:
+		- the cursor position is passed to CDisplayList::TestSelect(), which searches 
+			for a corresponding graphic element on the SELECTION layer (these 
+			elements will generally be invisible)
+		- if a graphic element is found at the cursor position, its id is passed back
+			to the calling program which can use it to identify the item represented
+			by the graphic element
+ 
+ 

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="FreePcb">
+</Property><Property Name="Файл решения" Value="C:\Мои Web Сайты\FreePCB1359_code\freepcb.googlecode.com\svn\tags\version 1.359\FreePcb.sln">
+</Property><Property Name="Date" Value="5 марта 2016 г.">
+</Property><Property Name="Time" Value="16:43">
+</Property></Properties><Event ErrorLevel="0" Project="FreePcb" Source="FreePcb.vcproj" Description="Converting project file 'C:\Мои Web Сайты\FreePCB1359_code\freepcb.googlecode.com\svn\tags\version 1.359\FreePcb.vcproj'.">
+</Event><Event ErrorLevel="1" Project="FreePcb" Source="FreePcb.vcproj" Description="This application has been updated to include settings related to the User Account Control (UAC) feature of Windows Vista. By default, when run on Windows Vista with UAC enabled, this application is marked to run with the same privileges as the process that launched it. This marking also disables the application from running with virtualization. You can change UAC related settings from the Property Pages of the project.">
+</Event><Event ErrorLevel="1" Project="FreePcb" Source="FreePcb.vcproj" Description="VCWebServiceProxyGeneratorTool is no longer supported. The tool has been removed from your project settings.">
+</Event><Event ErrorLevel="0" Project="FreePcb" Source="FreePcb.vcproj" Description="Web deployment to the local IIS server is no longer supported. The Web Deployment build tool has been removed from your project settings.">
+</Event><Event ErrorLevel="1" Project="FreePcb" Source="FreePcb.vcproj" Description="MSB8012: $(TargetPath) ('C:\Мои Web Сайты\FreePCB1359_code\freepcb.googlecode.com\svn\tags\version 1.359\.\Debug\FreePcb.exe') does not match the Linker's OutputFile property value '.\Debug/FreePcb.exe' ('C:\Мои Web Сайты\FreePCB1359_code\freepcb.googlecode.com\svn\tags\version 1.359\Debug/FreePcb.exe') in project configuration 'Debug|Win32'. This may cause your project to build incorrectly. To correct this, please make sure that $(TargetPath) property value matches the value specified in %(Link.OutputFile).">
+</Event><Event ErrorLevel="1" Project="FreePcb" Source="FreePcb.vcproj" Description="MSB8012: $(TargetPath) ('C:\Мои Web Сайты\FreePCB1359_code\freepcb.googlecode.com\svn\tags\version 1.359\.\Release\FreePcb.exe') does not match the Linker's OutputFile property value '.\Release/FreePcb.exe' ('C:\Мои Web Сайты\FreePCB1359_code\freepcb.googlecode.com\svn\tags\version 1.359\Release/FreePcb.exe') in project configuration 'Release|Win32'. This may cause your project to build incorrectly. To correct this, please make sure that $(TargetPath) property value matches the value specified in %(Link.OutputFile).">
+</Event><Event ErrorLevel="0" Project="FreePcb" Source="FreePcb.vcproj" Description="Done converting to new project file 'C:\Мои Web Сайты\FreePCB1359_code\freepcb.googlecode.com\svn\tags\version 1.359\FreePcb.vcxproj'.">
+</Event><Event ErrorLevel="3" Project="FreePcb" Source="FreePcb.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="FreePcb.sln" Description="Преобразование решения успешно завершено">
+</Event><Event ErrorLevel="3" Project="" Source="FreePcb.sln" Description="Converted">
+</Event></UpgradeLog>

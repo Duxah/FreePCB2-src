@@ -1,0 +1,146 @@
+Changelog
+---------
+
+Version 1.1
+	- Footprints can now contain silkscreen text (besides the reference designator) 
+	- Added support for oval, octagonal and rounded-rectangle pads 
+	- The function key menu is now "clickable" 
+	- The layer list is now clickable to select the active copper layer for routing. 
+	- Clicking in the colored square next to a layer toggles its visibility on and off, 
+	  which is much faster than using "View->Layers" 
+	- With nothing selected, the right-click menu has been expanded 
+
+Version 1.05
+	- various bugs fixed
+	
+Version 1.004
+	- This corrects a problem where the taskbar, layer list and function key menus 
+	  were displayed incorrectly when large fonts were selected in the Windows 
+	  Display Advanced Settings. 
+	  
+Version 1.003
+	- Bug fixed where routing a trace on a net that included pins that didn't exist 
+	  on parts would crash.
+	  
+Version 1.002
+	- Bug fixed where using "View->Show part..." would crash if the selected part 
+	  hadn't been assigned a footprint. 
+	- When routing using a ratline, the trace can now be terminated on any pin on 
+	  the net by routing to the pin.
+
+Version 1.001
+	- Bug fixed where trying to unroute a segment of a stub trace would cause a crash. 
+	- New item in the View menu called "Show part..." that helps find a part in 
+	  the layout
+	  
+Version 1.0
+	- Design Rule Checker added. 
+
+Version 0.945
+	- Annular rings are now added to pins and vias that connect to copper areas on 
+	  inner layers with thermal reliefs.
+	- The "Board outline line width" and "Minimum silkscreen stroke width" parameters 
+	  now work properly in the CAM dialog. 
+	- When adding parts using the Add->Part dialog, the reference designator field 
+	  is automatically incremented to make it easier to add a series of similar parts. 
+
+Version 0.943
+	- Fixed bug where a zero-length ratline at the end of a connection would
+	  cause a crash on loading the .fpc file
+	- Fixed "new", "open" and "save" buttons for Footpriont Editor
+
+Version 0.942 (12-28-2004)
+	- Improved error-checking when importing a netlist file
+	- "Tools->Check parts and nets" improved
+	- Bug affecting stub traces fixed
+	- Error in formatting Drill File data for negative coords. fixed
+	- A stub trace can be converted to a normal "pin-to-pin" trace by routing
+	  the stub trace to a pin
+	- A trace can be terminated by ending a segment anywhere on the destination pad
+	- An end-pin of a trace can be changed
+	- The reference designator for a part can be made invisible by setting
+	  Character Height to zero
+	- Option to set ref text size added to Context Menu for part
+	- Undo and Optimizing sped up by eliminating redundant Set Area calls
+
+Version 0.941 (12-21-2004)
+	- Fixed bug in Gerber code that drew thermals instead of clearances for
+	  some pins
+
+Version 0.940 (12-14-2004)
+	- Corrected pin numbering for BGA footprints in Footprint Wizard
+	- Fixed bug where attempting to write to a read-only library file
+	  would fail without error message
+
+Version 0.939 (12-12-2004)
+	- Fixed Footprint Wizard which wasn't generating pin names correctly
+
+Version 0.938 (12-12-2004)
+	- Added "Tools->Check parts and nets" menu item, for checking
+	  internal consistency of data
+	- Fixed several bugs related to editing the netlist
+	- Fixed bug in exporting netlist files
+	- Gave Footprint Editor its own set of layers
+
+Version 0.937 (12-11-2004)
+	- Temporarily removed PDF code due to licensing issue
+	- Fixed a couple of Undo bugs
+
+Version 0.936 (12-05-2004)
+	- Added metric units to CAM dialog
+	- Added alphanumeric pin names
+	- Added active layer indicator
+	- Updated User Guide
+
+Version 0.935 (11-16-2004)
+	- Fixed several bugs in Gerber code
+
+Version 0.934 (11-08-2004)
+	- Fixed several bugs in Gerber code
+
+Version 0.933 (10-25-2004)
+	- Fixed bug where default race widths were not applied to nets imported
+	  from netlist file
+	- Links to website and User Guide added to About box
+
+Version 0.932 (10-19-2004)
+	- In Gerbers, clearances added around text
+	- Default trace widths for existing nets are preserved on importing
+	  netlist file
+
+Version 0.931 (11-16-2004)
+	- Fixed bug affecting connections between stub traces and copper areas
+	  in Gerbers
+	- Added the ability to import netlist files into an existing project,
+	  retaining footprints and routing as much as possible.
+	- Changed Gerber code to eliminate clearances between traces and copper
+	  areas on the same net
+	- Undo improved
+	- Added support for launching from Windows shell
+	- Added variable line widths for thermal reliefs
+
+Version 0.93 (10-04-2004)
+	- Autosave added
+	- When routing, cursor shows 45 degree lines
+	- Fixed bug that caused wrap-around errors in Gerbers for boards > 8 inches
+
+Version 0.92 (07-05-2004)
+	- Footprint Wizard can now make headers
+	- PDF file generator added
+	- "built_in" library deprecated
+	- support for headings in library files eliminated
+	- fixed bug that drew arcs as straight lines in silkscreen layers
+	- fixed bug that caused crash on moving end-corners of polylines
+	- streamlined editing of footprints from layout window
+	- fixed Project>Parts dialog so that footprints and packages can be changed
+	- libraries divided into 3 folders (lib, lib_contrib and lib_extra)
+	- fixed bug that failed to rotate ref text in footprint preview windows
+	- added pilot holes and minimum silkscreen stroke width to CAM dialog
+
+Version 0.91 (05-19-2004)
+	- added Footprint Wizard
+	- added Footprint Editor
+	- added metric units (mm) for most functions
+
+Version 0.90
+	- first public release

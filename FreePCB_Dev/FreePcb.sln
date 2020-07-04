@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{71DC9CC4-5882-4F43-93D2-7D8DE57B1621}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FreePcb", "FreePcb.vcxproj", "{48B16142-FBCE-4203-996C-8DEC8AAE6546}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{48B16142-FBCE-4203-996C-8DEC8AAE6546}.Debug|Win32.ActiveCfg = Debug|Win32
+		{48B16142-FBCE-4203-996C-8DEC8AAE6546}.Debug|Win32.Build.0 = Debug|Win32
+		{48B16142-FBCE-4203-996C-8DEC8AAE6546}.Release|Win32.ActiveCfg = Debug|Win32
+		{48B16142-FBCE-4203-996C-8DEC8AAE6546}.Release|Win32.Build.0 = Debug|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
