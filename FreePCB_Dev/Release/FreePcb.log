@@ -1,9 +1,9 @@
-﻿Построение начато 10.02.2017 9:11:49.
-     1>Проект "C:\FreePCB_Continuation\FreePcb.vcxproj" в узле 2 (целевые объекты build).
+﻿Построение начато 22.05.2021 0:35:28.
+     1>Проект "C:\Users\Duxah\Desktop\Duxah\FreePcbDoc\FreePCB_Dev2032\FreePCB_Dev\FreePcb.vcxproj" в узле 2 (целевые объекты build).
      1>InitializeBuildStatus:
          Создание ".\Release\FreePcb.unsuccessfulbuild", так как было задано "AlwaysCreate".
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I./include /Zi /nologo /W1 /WX- /O2 /Ob1 /Oy- /D WIN32 /D _WINDOWS /D _VC80_UPGRADE=0x0710 /D _MBCS /D _AFXDLL /GF /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp".\Release/FreePcb.pch" /Fo".\Release/" /Fd".\Release/vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Cuid.cpp DesignRules.cpp DisplayList.cpp DlgAddArea.cpp DlgAddMaskCutout.cpp DlgAddMerge.cpp DlgAddNet.cpp DlgAddPart.cpp DlgAddPin.cpp DlgAddPoly.cpp DlgAddText.cpp DlgAddWidth.cpp DlgAreaLayer.cpp DlgAssignNet.cpp DlgCAD.cpp DlgCentroid.cpp DlgChangeLayer.cpp DlgChooseNetName.cpp DlgDRC.cpp DlgDupFootprintName.cpp DlgEditBoardCorner.cpp DlgEditNet.cpp DlgExportDsn.cpp DlgFindPart.cpp DlgFpRefText.cpp DlgFpText.cpp DlgGlue.cpp DlgGroupPaste.cpp DlgHole.cpp DlgImportFootprint.cpp DlgImportOptions.cpp DlgImportSes.cpp DlgIndexing.cpp DlgIvex.cpp DlgLayers.cpp DlgLibraryManager.cpp DlgLog.cpp DlgMoveOrigin.cpp DlgMyMessageBox.cpp DlgMyMessageBox2.cpp DlgNetCombine.cpp DlgNetlist.cpp DlgPartlist.cpp DlgProjectOptions.cpp DlgReassignLayers.cpp DlgRefText.cpp DlgReport.cpp DlgSaveFootprint.cpp DlgSaveLib.cpp DlgSetAreaHatch.cpp DlgSetSegmentWidth.cpp DlgSetTraceWidths.cpp DlgShortcuts.cpp DlgSideStyle.cpp DlgSlot.cpp DlgValueText.cpp DlgVia.cpp DlgWizQuad.cpp FootprintLib.cpp FootprintView.cpp FreePcb.cpp FreePcbDoc.cpp FreePcbView.cpp Gerber.cpp MainFrm.cpp MyFileDialog.cpp MyFileDialogExport.cpp MyToolBar.cpp NetList.cpp Net_iter.cpp PartList.cpp PathDialog.cpp PolyLine.cpp QAFDebug.cpp RTcall.cpp Shape.cpp StdAfx.cpp afxasert.cpp file_io.cpp gpc_232.cpp ivex_mod_file.cpp php_polygon.cpp php_polygon_vertex.cpp smcharacter.cpp smfontutil.cpp /D "_CRT_SECURE_NO_DEPRECATE" 
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I./include /Zi /nologo /W1 /WX- /O2 /Ob1 /Oy- /D WIN32 /D _WINDOWS /D _VC80_UPGRADE=0x0710 /D _MBCS /D _AFXDLL /GF /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp".\Release/FreePcb.pch" /Fo".\Release/" /Fd".\Release/vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Cuid.cpp DesignRules.cpp DisplayList.cpp DlgAddArea.cpp DlgAddMaskCutout.cpp DlgAddMerge.cpp DlgAddNet.cpp DlgAddPart.cpp DlgAddPin.cpp DlgAddPoly.cpp DlgAddText.cpp DlgAddWidth.cpp DlgAreaLayer.cpp DlgAssignNet.cpp DlgCAD.cpp DlgCentroid.cpp DlgChangeLayer.cpp DlgChooseNetName.cpp DlgDRC.cpp DlgDupFootprintName.cpp DlgEditBoardCorner.cpp DlgEditNet.cpp DlgExportDsn.cpp DlgFindPart.cpp DlgFpRefText.cpp DlgFpText.cpp DlgGlue.cpp DlgGroupPaste.cpp DlgHole.cpp DlgImportFootprint.cpp DlgImportOptions.cpp DlgImportSes.cpp DlgIndexing.cpp DlgIvex.cpp DlgLayers.cpp DlgLibraryManager.cpp DlgLog.cpp DlgMoveOrigin.cpp DlgMyMessageBox.cpp DlgMyMessageBox2.cpp DlgNetCombine.cpp DlgNetlist.cpp DlgPartlist.cpp DlgProjectOptions.cpp DlgReassignLayers.cpp DlgRefText.cpp DlgReport.cpp DlgSaveFootprint.cpp DlgSaveLib.cpp DlgSetAreaHatch.cpp DlgSetSegmentWidth.cpp DlgSetTraceWidths.cpp DlgShortcuts.cpp DlgSideStyle.cpp DlgSlot.cpp DlgValueText.cpp DlgVia.cpp DlgWizQuad.cpp FootprintLib.cpp FootprintView.cpp FreePcb.cpp FreePcbDoc.cpp FreePcbView.cpp Gerber.cpp MainFrm.cpp MyToolBar.cpp NetList.cpp Net_iter.cpp PartList.cpp PathDialog.cpp PolyLine.cpp QAFDebug.cpp RTcall.cpp Shape.cpp StdAfx.cpp TextList.cpp UndoList.cpp afxasert.cpp file_io.cpp gpc_232.cpp ivex_mod_file.cpp php_polygon.cpp php_polygon_vertex.cpp smcharacter.cpp /D "_CRT_SECURE_NO_DEPRECATE" 
          Cuid.cpp
          DesignRules.cpp
          DisplayList.cpp
@@ -69,8 +69,6 @@
          FreePcbView.cpp
          Gerber.cpp
          MainFrm.cpp
-         MyFileDialog.cpp
-         MyFileDialogExport.cpp
          MyToolBar.cpp
          NetList.cpp
          Net_iter.cpp
@@ -81,6 +79,8 @@
          RTcall.cpp
          Shape.cpp
          StdAfx.cpp
+         TextList.cpp
+         UndoList.cpp
          afxasert.cpp
          file_io.cpp
          gpc_232.cpp
@@ -88,11 +88,10 @@
          php_polygon.cpp
          php_polygon_vertex.cpp
          smcharacter.cpp
-         smfontutil.cpp
        ResourceCompile:
          Для всех выходных данных обновления не требуется.
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:".\Release/FreePcb.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:./libs/Release winmm.lib rpcrt4.lib clibpdf.lib /MANIFEST /ManifestFile:".\Release\FreePcb.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /PDB:".\Release/FreePcb.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\Release\FreePcb.lib" /MACHINE:X86 .\Release\FreePcb.res
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:".\Release/FreePcb.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:./libs/Release winmm.lib rpcrt4.lib clibpdf.lib /MANIFEST /ManifestFile:".\Release\FreePcb.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /PDB:".\Release/FreePcb.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\Release\FreePcb.lib" /MACHINE:X86 .\Release\FreePcb.res
          .\Release/afxasert.obj
          .\Release/Cuid.obj
          .\Release/DesignRules.obj
@@ -162,8 +161,6 @@
          .\Release/gpc_232.obj
          .\Release/ivex_mod_file.obj
          .\Release/MainFrm.obj
-         .\Release/MyFileDialog.obj
-         .\Release/MyFileDialogExport.obj
          .\Release/MyToolBar.obj
          .\Release/Net_iter.obj
          .\Release/NetList.obj
@@ -181,14 +178,14 @@
          .\Release/TextList.obj
          .\Release/UndoList.obj
          .\Release/utility.obj /MACHINE:I386 
-         FreePcb.vcxproj -> C:\FreePCB_Continuation\.\Release\FreePcb.exe
+         FreePcb.vcxproj -> C:\Users\Duxah\Desktop\Duxah\FreePcbDoc\FreePCB_Dev2032\FreePCB_Dev\.\Release\FreePcb.exe
        Manifest:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:".\Release/FreePcb.exe;#1" /manifest .\Release\FreePcb.exe.intermediate.manifest "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\Include\Manifest\dpiaware.manifest"
+         c:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:".\Release/FreePcb.exe;#1" /manifest .\Release\FreePcb.exe.intermediate.manifest "c:\Program Files\Microsoft Visual Studio 10.0\VC\Include\Manifest\dpiaware.manifest"
        FinalizeBuildStatus:
          Файл ".\Release\FreePcb.unsuccessfulbuild" удаляется.
          Обращение к ".\Release\FreePcb.lastbuildstate".
-     1>Построение проекта "C:\FreePCB_Continuation\FreePcb.vcxproj" завершено (целевые объекты build).
+     1>Построение проекта "C:\Users\Duxah\Desktop\Duxah\FreePcbDoc\FreePCB_Dev2032\FreePCB_Dev\FreePcb.vcxproj" завершено (целевые объекты build).
 
 Построение успешно завершено.
 
-Затраченное время: 00:00:17.72
+Затраченное время: 00:02:36.28

@@ -115,7 +115,7 @@ int ParseKeyString( CString * str, CString * key_str, CArray<CString> * param_st
 				param = "";
 				pos = 1;
 			}
-			right_str = right_str.Right( right_str.GetLength() - param.GetLength() - 3);
+			right_str = right_str.Right( right_str.GetLength() - param.GetLength() - 2);
 		}
 		else
 		{

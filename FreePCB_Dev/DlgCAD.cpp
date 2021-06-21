@@ -678,7 +678,8 @@ void CDlgCAD::OnBnClickedGo()
 					|| layer == LAY_SM_BOTTOM
 					|| layer == LAY_BOTTOM_COPPER
 					|| layer == LAY_MASK_BOTTOM
-					|| layer == LAY_PASTE_BOTTOM )
+					|| layer == LAY_PASTE_BOTTOM 
+					|| layer == LAY_REFINE_BOT)
 				{
 					if( m_flags & GERBER_MIRROR_BOTTOM_PNG ) 
 						mirror_str = "--mirror ";

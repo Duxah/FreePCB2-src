@@ -267,7 +267,9 @@ ON_COMMAND(ID_SEL_ARC_EL, OnProjectSelectArcElements)
 ON_COMMAND(ID_SEL_VIA_EL, OnProjectSelectViaElements)
 ON_COMMAND(ID_RUN_INFO_BOX, OnProjectRunInfoBox)
 ON_COMMAND(ID_TOOLS_SETORIGIN, OnSetOriginToSelectedItem)
-//ON_COMMAND_RANGE(1, ID_MAX_NUM_COMMANDS, OnRangeCmds)
+
+ON_UPDATE_COMMAND_UI_RANGE(1, ID_ADD_POLYLINE, OnRangeCmds)
+ON_UPDATE_COMMAND_UI_RANGE(ID_ADD_GRAPHICLINE, ID_MAX_NUM_COMMANDS, OnRangeCmds)
 END_MESSAGE_MAP()
 
 
@@ -1117,7 +1119,7 @@ void CFreePcbView::OnLButtonUp(UINT nFlags, CPoint point)
 			else if( m_cursor_mode == CUR_DRAG_GROUP || m_cursor_mode == CUR_DRAG_GROUP_ADD )
 			{
 				// complete move
-				m_Doc->m_dlist->StopDragging();
+				CancelDraggingGroup();
 				m_Doc->m_dlist->CancelHighLight();
 				int dx = m_last_cursor_point.x - m_from_pt.x;
 				int dy = m_last_cursor_point.y - m_from_pt.y;
@@ -1207,6 +1209,8 @@ void CFreePcbView::OnLButtonUp(UINT nFlags, CPoint point)
 													id sel( ID_NET, ID_CONNECT, new_ic, ID_SEG, ii );
 													NewSelect( nn1, &sel, 0, 0 );
 												}
+												if( new_ic >= 0 )
+													m_Doc->m_nlist->DrawConnection(nn1,new_ic);
 											}
 										}
 										for( int ii=0; ii<net->connect[icon].nsegs; ii++ )
@@ -1911,6 +1915,7 @@ void CFreePcbView::OnLButtonUp(UINT nFlags, CPoint point)
 			}
 			else if( m_cursor_mode == CUR_MOVE_SEGMENT )
 			{
+				m_draw_layer = 0;
 				// move vertex by modifying adjacent segments and reconciling via
 				m_Doc->m_dlist->StopDragging();
 				SaveUndoInfoForNetAndConnections( m_sel_net, CNetList::UNDO_NET_MODIFY, TRUE, m_Doc->m_undo_list );
@@ -2143,9 +2148,15 @@ void CFreePcbView::OnLButtonUp(UINT nFlags, CPoint point)
 							if( new_sel_net && from_sel_net && (new_sel_net != from_sel_net) )
 							{
 								// pins assigned to different nets, can't connect them
-								CString mess;
-								mess.Format( "You are trying to connect pins on different nets.\nCombine this nets?\nWARNING! This operation has no undo action." );
-								int ret = AfxMessageBox( mess, MB_YESNO );
+								int ret = IDNO;
+								if( m_Doc->m_netlist_completed == 0 )
+								{
+									CString mess;
+									mess.Format( "You are trying to connect pins on different nets.\nCombine this nets?\nWARNING! This operation has no undo action." );
+									ret = AfxMessageBox( mess, MB_YESNO );
+								}
+								else
+									ret = IDYES;
 								if( ret == IDYES )
 								{
 									m_Doc->m_dlist->StopDragging();
@@ -2699,6 +2710,7 @@ void CFreePcbView::OnLButtonUp(UINT nFlags, CPoint point)
 				SetCursorMode( CUR_TEXT_SELECTED );
 				m_Doc->m_tlist->HighlightText( m_sel_text );
 				m_Doc->ProjectModified( TRUE );
+				m_draw_layer = 0;
 			}
 			else if( m_cursor_mode == CUR_DRAG_MEASURE_1 )
 			{
@@ -2807,6 +2819,7 @@ void CFreePcbView::OnLButtonDblClk(UINT nFlags, CPoint point)
 //
 void CFreePcbView::OnRButtonDown(UINT nFlags, CPoint point)
 {
+	fCopyTraces = FALSE;
 	m_draw_layer = LAY_HILITE;//OnRButtonDown
 	m_disable_context_menu = 1;
 	if( m_cursor_mode == CUR_DRAG_PART )
@@ -2874,6 +2887,7 @@ void CFreePcbView::OnRButtonDown(UINT nFlags, CPoint point)
 	else if( m_cursor_mode == CUR_MOVE_SEGMENT )
 	{
 		VertexMoved();
+		m_draw_layer = 0;
 		m_Doc->m_nlist->CancelMovingSegment( m_sel_net, m_sel_ic, m_sel_is );
 		SetCursorMode( CUR_SEG_SELECTED );
 		m_Doc->m_nlist->HighlightSegment( m_sel_net, m_sel_ic, m_sel_is );
@@ -6948,7 +6962,7 @@ int CFreePcbView::ShowSelectStatus()
 	case CUR_DRAG_RAT:
 		{
 			// get length
-			CString len_str="", an_str="";
+			CString len_str="", an_str="", segw_str="";
 			double len=0, segment_angle=0;
 			if (m_cursor_mode == CUR_SEG_SELECTED || m_cursor_mode == CUR_RAT_SELECTED )
 			{
@@ -6969,6 +6983,7 @@ int CFreePcbView::ShowSelectStatus()
 			len = sqrt( (x-xn)*(x-xn) + (y-yn)*(y-yn) );	
 			::MakeCStringFromDimension( &len_str, len, u, TRUE, TRUE, FALSE, u==MIL?1:3 );
 			::MakeCStringFromDimension( &an_str, segment_angle, u, FALSE, TRUE, FALSE, 1 );
+			::MakeCStringFromDimension( &segw_str, m_sel_seg.width, u, TRUE, TRUE, FALSE, u==MIL?1:3 );
 			}
 			int ep = m_sel_con.end_pin;
 			if( m_sel_con.end_pin == cconnect::NO_END )
@@ -7009,21 +7024,21 @@ int CFreePcbView::ShowSelectStatus()
 					if( m_sel_is < m_sel_con.nsegs )
 					{
 						if( m_sel_con.vtx[m_sel_con.nsegs].tee_ID )
-							str.Format( "net \"%s\" branch(%d) to %s.%s, angle=%s, width=%d, len=%s(T%d)",
+							str.Format( "net \"%s\" branch(%d) to %s.%s, angle=%s, width=%s, len=%s(T%d)",
 								m_sel_net->name, m_sel_id.i+1,
 								m_sel_start_pin.ref_des,
 								m_sel_start_pin.pin_name,
 								an_str,
-								m_sel_seg.width/NM_PER_MIL, len_str,
+								segw_str, len_str,
 								m_sel_con.vtx[m_sel_con.nsegs].tee_ID
 							);
 						else
-							str.Format( "net \"%s\" stub(%d) from %s.%s, angle=%s, width=%d, len=%s",
+							str.Format( "net \"%s\" stub(%d) from %s.%s, angle=%s, width=%s, len=%s",
 								m_sel_net->name, m_sel_id.i+1,
 								m_sel_start_pin.ref_des,
 								m_sel_start_pin.pin_name,
 								an_str,
-								m_sel_seg.width/NM_PER_MIL,
+								segw_str,
 								len_str
 							);
 					}
@@ -7066,26 +7081,26 @@ int CFreePcbView::ShowSelectStatus()
 #else
 				if( m_sel_con.nsegs == 1 && m_sel_seg.layer == LAY_RAT_LINE )
 				{
-					str.Format( "net \"%s\" connection(%d) %s.%s-%s.%s%s, width=%d",
+					str.Format( "net \"%s\" connection(%d) %s.%s-%s.%s%s, width=%s",
 						m_sel_net->name, m_sel_id.i+1,
 						m_sel_start_pin.ref_des,
 						m_sel_start_pin.pin_name,
 						m_sel_end_pin.ref_des,
 						m_sel_end_pin.pin_name,
 						locked_flag,
-						m_sel_seg.width/NM_PER_MIL
+						segw_str
 						);
 				}
 				else if( m_sel_is < m_sel_con.nsegs )
 				{
-					str.Format( "net \"%s\" trace(%d) %s.%s-%s.%s%s, angle=%s, width=%d, len=%s",
+					str.Format( "net \"%s\" trace(%d) %s.%s-%s.%s%s, angle=%s, width=%s, len=%s",
 						m_sel_net->name,  m_sel_id.i+1,
 						m_sel_start_pin.ref_des,
 						m_sel_start_pin.pin_name,
 						m_sel_end_pin.ref_des,
 						m_sel_end_pin.pin_name,
 						locked_flag, an_str,
-						m_sel_seg.width/NM_PER_MIL, len_str
+						segw_str, len_str
 						);
 				}
 #endif
@@ -8536,6 +8551,11 @@ void CFreePcbView::OnProjectSelectViaElements()
 		SetCursorMode(CUR_GROUP_SELECTED);
 	}
 	Invalidate( FALSE );// via el's
+}
+
+void CFreePcbView::OnRangeCmds( CCmdUI * CMD )
+{
+	Invalidate( FALSE );
 }
 
 void CFreePcbView::ProjectRunInfoBox()
@@ -10389,6 +10409,9 @@ void CFreePcbView::SnapCursorPoint( CPoint wp, UINT nFlags )
 		}
 		else 
 			ASSERT(0);
+		if( grid_spacing == 0 )
+			grid_spacing += 1;
+
 		// see if we need to snap to angle
 		if( m_Doc->m_snap_angle && (wp != m_snap_angle_ref)
 			&& ( m_cursor_mode == CUR_DRAG_RAT
@@ -11006,6 +11029,7 @@ void CFreePcbView::OnOPSideConvertToStraightLine()
 	ShowSelectStatus();
 	SetFKText( m_cursor_mode );
 	m_Doc->ProjectModified( TRUE );
+	Invalidate( FALSE );
 }
 //===============================================================================================
 void CFreePcbView::OnOPSideConvertToArcCw()
@@ -11016,6 +11040,7 @@ void CFreePcbView::OnOPSideConvertToArcCw()
 	ShowSelectStatus();
 	SetFKText( m_cursor_mode );
 	m_Doc->ProjectModified( TRUE );
+	Invalidate( FALSE );
 }
 //===============================================================================================
 void CFreePcbView::OnOPSideConvertToArcCcw()
@@ -11026,6 +11051,7 @@ void CFreePcbView::OnOPSideConvertToArcCcw()
 	ShowSelectStatus();
 	SetFKText( m_cursor_mode );
 	m_Doc->ProjectModified( TRUE );
+	Invalidate( FALSE );
 }
 //===============================================================================================
 // unroute entire connection
@@ -13498,6 +13524,12 @@ void CFreePcbView::TurnGroup ()
 				m_Doc->m_outline_poly[item].Undraw();
 				m_Doc->m_outline_poly.RemoveAt(item);
 				m_Doc->OPRefreshID();
+				if( m_sel_id.type == ID_POLYLINE )
+					if( m_sel_id.i >= m_Doc->m_outline_poly.GetSize() )
+					{
+						m_sel_id.i = m_Doc->m_outline_poly.GetSize() - 1;
+						m_sel_id.ii = 0;
+					}
 				continue;
 			}
 			if ( m_Doc->m_outline_poly[item].GetSideSel(0) || m_Doc->m_outline_poly[item].GetSel(0) ) 
@@ -13653,7 +13685,7 @@ BOOL CFreePcbView::ThisGroupContainsGluedParts()
 		int ret = AfxMessageBox( "This group contains glued parts, so in order \
 not to disturb the location this parts \
 relative to other glued parts of the Pcb, \
-we suggest to select all glued objects and continue?  ", MB_YESNOCANCEL );
+it is recommended to select all glued objects and continue?  ", MB_YESNOCANCEL );
 		if( ret == IDCANCEL )
 			return FALSE;
 		else if( ret == IDYES )
@@ -15604,7 +15636,8 @@ void CFreePcbView::RotateGroup(int angle, BOOL unroute)
 							Rotate_i_Vertex( &x,&y,angle,groupAverageX,groupAverageY );
 							p->SetX(ic,x);
 							p->SetY(ic,y);
-							COUNT++;
+							if(ic)
+								COUNT++;
 						}
 					}
 					if( RedrawFlag )
@@ -15704,7 +15737,8 @@ void CFreePcbView::RotateGroup(int angle, BOOL unroute)
 					Rotate_i_Vertex( &x,&y,angle,groupAverageX,groupAverageY );
 					p->SetX(ic,x);
 					p->SetY(ic,y);
-					COUNT++;
+					if(ic)
+						COUNT++;
 				}
 			}
 			if( RedrawFlag )
@@ -16856,7 +16890,8 @@ void CFreePcbView::SelectBetween ()
 						MAXX = CURMAXX;
 						MID = CURMID;
 						Y = Y_prev2;
-						UpdateWindow();
+						//UpdateWindow();
+						m_draw_layer = 0;
 						Invalidate(FALSE);//SelectBetween
 					}
 				}while( b2 );
@@ -16972,8 +17007,8 @@ BOOL CFreePcbView::TestSelElements (int mode)
 							VTX_SEL++;
 						if( mode == FOR_FK_SET_CLEARANCE )
 						{
-							if( n->connect[i].seg[0].selected )
-								RET0
+							//if( n->connect[i].seg[0].selected )
+							//	RET0
 						}
 						if( s->selected )
 						{
@@ -17093,6 +17128,8 @@ void CFreePcbView::OnSetClearance ()
 {
 	if( !m_sel_count )
 		return;
+	if( m_sel_count > 50 )
+		return;
 	if( prev_sel_count != m_sel_count )
 		SaveUndoInfoForGroup( UNDO_GROUP_MODIFY, m_Doc->m_undo_list );
 	m_dlist->CancelHighLight();
@@ -17166,7 +17203,7 @@ void CFreePcbView::OnSetClearance ()
 	f_an = Angle(x2n,y2n,x2,y2);
 	Rotate_Vertex( &f_x, &f_y, -f_an);
 	int bMess = 0;
-	while (1)
+	for( int Step=m_sel_count+1; Step>=0; Step-- )
 	{
 		ptr = FindNEXTSegmentOfGroup ( f_an, &_id, ptr, &f_id, f_ptr );
 		if( _id.ii == -1 )
@@ -17594,6 +17631,7 @@ void CFreePcbView::ApproximArc ()
 			if( ArcApp( &m_Doc->m_outline_poly[ibo], FALSE, NULL, NULL ) )
 				m_Doc->m_outline_poly[ibo].Draw();
 		}
+	m_Doc->ProjectModified( TRUE );
 }
 
 
@@ -18466,7 +18504,7 @@ void CFreePcbView::MergeGroup()
 	}
 	if ( m_sel_id.type == ID_POLYLINE )
 		merge0 = m_Doc->m_outline_poly[m_sel_id.i].GetMerge();
-	int clrnc = m_Doc->m_fill_clearance;
+	int clrnc = 0;//m_Doc->m_fill_clearance;
 	if( merge0 >= 0 )
 		clrnc = m_Doc->m_mlist->GetClearance( merge0 );
 	CDlgAddMerge dlg;
@@ -18944,7 +18982,8 @@ void CFreePcbView::OnInfoBoxMess( int command, int n_str, CArray<CString> *str )
 	// message to infobox
 	else if( command == C_ENQUARY )
 	{
-		OnInfoBoxSendMess(m_Doc->m_pcb_full_path);
+		if( m_Doc->m_file_version > 2.0 )
+			OnInfoBoxSendMess(m_Doc->m_pcb_full_path);
 		return;
 	}
 	// Invalidate(FALSE)

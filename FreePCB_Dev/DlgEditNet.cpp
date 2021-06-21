@@ -274,6 +274,8 @@ void CDlgEditNet::OnBnClickedButtonDelete()
 			m_pins_edited = TRUE;
 		}
 	}
+	else
+		AfxMessageBox( "Netlist protected!", MB_ICONERROR );
 }
 
 void CDlgEditNet::OnBnClickedButtonAdd()

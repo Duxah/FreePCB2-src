@@ -101,7 +101,7 @@ public:
 	void WriteOptions( CStdioFile * pcb_file, BOOL wColors );
 	void ReadMerges( CStdioFile * pcb_file, Merge * merge_list );
 	void WriteMerges( CStdioFile * pcb_file, Merge * merge_list );
-	int ImportNetlist( CStdioFile * file, UINT flags, 
+	int ImportNetlist( CStdioFile * file, UINT flags,   
 						partlist_info * pl, netlist_info * nl );
 	int ImportPADSPCBNetlist( CStdioFile * file, UINT flags, 
 							   partlist_info * pl, netlist_info * nl );

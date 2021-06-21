@@ -998,7 +998,7 @@ int CNetList::GetPinIndexByNameForPart( cpart * part, CString pin, int x, int y 
 		}
 		return RET_I;
 	}
-	ASSERT(0);
+	//ASSERT(0);
 	return RET_I;
 }
 // return pin index or -1 if not found
@@ -1984,7 +1984,12 @@ int CNetList::RemoveSegment( cnet * net, int ic, int is )
 			{
 				inew--;
 				if( del == ic )
-					return inew;
+				{
+					if( inew >= 0 )
+						return inew;
+					else
+						return -1;
+				}
 				else if( del < ic )
 				{
 					ic--;
@@ -2006,7 +2011,12 @@ int CNetList::RemoveSegment( cnet * net, int ic, int is )
 				{
 					inew--;
 					if( del == ic )
-						return inew;
+					{
+						if( inew >= 0 )
+							return inew;
+						else
+							return -1;
+					}
 					else if( del < ic )
 					{
 						ic--;
@@ -2130,14 +2140,14 @@ int CNetList::ChangeSegmentLayer( cnet * net, int ic, int iseg, int layer, int v
 
 	// now adjust vias
 	if( iseg )
-		if( ReconcileVia( net, ic, iseg, TRUE, vw, vh ) == 0 && needed1 )
+		if( ReconcileVia( net, ic, iseg, TRUE, vw, vh ) == 0 && needed1 == 0 )
 		{
 			net->connect[ic].vtx[iseg].via_w = 0;
 			net->connect[ic].vtx[iseg].via_hole_w = 0;
 			UndrawVia( net, ic, iseg );
 			DrawSegment( net, ic, iseg-1 );
 		}
-	if( ReconcileVia( net, ic, iseg+1, TRUE, vw, vh ) == 0 && needed2 )
+	if( ReconcileVia( net, ic, iseg+1, TRUE, vw, vh ) == 0 && needed2 == 0 )
 	{
 		net->connect[ic].vtx[iseg+1].via_w = 0;
 		net->connect[ic].vtx[iseg+1].via_hole_w = 0;
@@ -2323,6 +2333,7 @@ int CNetList::InsertSegment( cnet * net, int ic, int iseg, int x, int y, int lay
 	if( dir == 0 )
 	{
 		// routing forward
+		if( iseg < c->nsegs )
 		if( (abs(x-c->vtx[iseg+1].x) + abs(y-c->vtx[iseg+1].y )) < TOL )
 		{ 
 			// new vertex is the same as end of old segment 
@@ -6192,9 +6203,9 @@ void CNetList::ImportNetListInfo( netlist_info * nl, int flags, CDlgLog * log,
 					// we may want to preserve this pin
 					cpart * part = m_plist->GetPart( ref_des );
 					if( !part )
-						RemoveNetPin( net, &ref_des, &pin_name );
+						RemoveNetPin( net, &ref_des, &pin_name, FALSE );
 					else if( !part->bPreserve )
-						RemoveNetPin( net, &ref_des, &pin_name );
+						RemoveNetPin( net, &ref_des, &pin_name, FALSE );
 					else
 					{
 						// preserve the pin
@@ -6210,7 +6221,7 @@ void CNetList::ImportNetListInfo( netlist_info * nl, int flags, CDlgLog * log,
 							ref_des, pin_name, net->name  );
 						log->AddLine( mess );
 					}
-					RemoveNetPin( net, &ref_des, &pin_name );
+					RemoveNetPin( net, &ref_des, &pin_name, FALSE );
 				}
 			}
 			else
@@ -6544,7 +6555,7 @@ void CNetList::RestoreConnectionsAndAreas( CNetList * old_nl, int flags, CDlgLog
 					break;
 			}
 			if( bMoveIt ) 
-				if( old_net->name.Compare(old_net->name) )
+				if( old_net->name.Compare( new_area_net->name ) )
 					for( int iarea=0; iarea<old_net->nareas; iarea++ )
 					{
 						carea * old_a = &old_net->area[iarea];
@@ -6572,6 +6583,16 @@ void CNetList::RestoreConnectionsAndAreas( CNetList * old_nl, int flags, CDlgLog
 						poly->SetPtr( net );
 						poly->SetMerge( old_poly->GetMerge() );
 						poly->Draw( m_dlist );
+						//
+						//
+						//
+						cnet * rem_net = GetNetPtrByName(&old_net->name);
+						if( rem_net && rem_net != old_net )
+							if( rem_net->nareas > iarea )
+								if( rem_net->area[iarea].poly->GetNumCorners() && old_net->area[iarea].poly->GetNumCorners() )
+								if( rem_net->area[iarea].poly->GetX(0) == old_net->area[iarea].poly->GetX(0) )
+									if( rem_net->area[iarea].poly->GetY(0) == old_net->area[iarea].poly->GetY(0) )
+										RemoveArea( rem_net, iarea );
 					}
 		}
 		if( flags & (KEEP_TRACES | KEEP_STUBS) )
@@ -7094,7 +7115,7 @@ int CNetList::CheckNetlist( CString * logstr )
 			// next pin in net
 			CString * ref_des = &net->pin[ip].ref_des;
 			CString * pin_name = &net->pin[ip].pin_name;
-			CString pin_id = *ref_des + "." + *pin_name;
+			/*CString pin_id = *ref_des + "." + *pin_name;
 			void * ptr;
 			BOOL test = pin_map.Lookup( pin_id, ptr );
 			cnet * dup_net = (cnet*)ptr;
@@ -7157,7 +7178,7 @@ int CNetList::CheckNetlist( CString * logstr )
 			}
 			else
 				pin_map.SetAt( pin_id, net );
-
+*/
 			cpart * part = net->pin[ip].part;
 			if( !part )
 			{
@@ -7302,7 +7323,7 @@ int CNetList::CheckNetlist( CString * logstr )
 				nerrors++;
 				nfixed++;
 			}
-			else if( c->start_pin == c->end_pin )
+			else if( c->start_pin == c->end_pin && c->vtx[0].x == c->vtx[c->nsegs].x && c->vtx[0].y == c->vtx[c->nsegs].y )
 			{
 				str.Format( "ERROR: Net \"%s\": connection from pin to itself\r\n",
 					net->name );
@@ -7359,7 +7380,7 @@ int CNetList::CheckConnectivity( CString * logstr )
 				nerrors++;
 				nfixed++;
 			} 
-			else if( c->start_pin == c->end_pin )
+			else if( c->start_pin == c->end_pin && c->vtx[0].x == c->vtx[c->nsegs].x && c->vtx[0].y == c->vtx[c->nsegs].y )
 			{
 				str.Format( "ERROR: Net \"%s\": connection from pin to itself\r\n",
 					net->name );
@@ -9093,14 +9114,16 @@ void CNetList::AddHighlightLines( int X, int Y, int mode )
 	// mode == 2: Horizontal line only
 	// mode == 3: Vertical&Horizontal lines
 	// mode == 4: Vertical&Horizontal lines
-#define hghlght_np 400
-	CPoint pts[hghlght_np];
+#define hghlght_np 400.0
+	CPoint pts[(int)hghlght_np];
 	RECT WR = m_dlist->GetWindowRect();
-	int d = (WR.right-WR.left)/(hghlght_np/4-1);
+	double d = ((double)WR.right-(double)WR.left)/(hghlght_np/4.0-1.0);
+	if( WR.right-WR.left < abs(WR.top-WR.bottom) )
+		d = abs((double)WR.top-(double)WR.bottom)/(hghlght_np/4.0-1.0);
 	int ii = 0;
 	if (mode != 1)
 	{
-		for (int x=WR.left; x<WR.right; x += d)
+		for (double x=WR.left; x<WR.right; x += d)
 		{
 			pts[ii].x = x*m_pcbu_per_wu;
 			pts[ii].y = Y;
@@ -9112,7 +9135,7 @@ void CNetList::AddHighlightLines( int X, int Y, int mode )
 	}
 	if (mode != 2)
 	{
-		for (int y=WR.bottom; y<WR.top; y += d)
+		for (double y=WR.bottom; y<WR.top; y += d)
 		{
 			pts[ii].x = X;
 			pts[ii].y = y*m_pcbu_per_wu;
@@ -9130,4 +9153,6 @@ void CNetList::AddHighlightLines( int X, int Y, int mode )
 	dl_element * el = m_dlist->Add( id, NULL, 0, DL_LINES_ARRAY, 1, &WR, 0, pts, ii );
 	int top_l = m_dlist->GetTopLayer();
 	setbit( el->map_orig_layer, top_l );
+	m_dlist->HighLight( el );
 }
+

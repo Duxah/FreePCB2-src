@@ -45,6 +45,7 @@ BEGIN_MESSAGE_MAP(CFreePcbApp, CWinApp)
 	ON_COMMAND(ID_TOOLS_OPENONLINEAUTOROUTER, OnToolsOpenOnlineAutorouter)
 	ON_COMMAND(ID_HELP_FREEROUTINGWEBSITE, OnHelpFreeRoutingWebsite)
 	ON_COMMAND(ID_HELP_USERGUIDE_PDF, OnHelpUserGuidePdf)
+	ON_COMMAND(ID_HELP_FAQ, OnHelpFAQ)
 	ON_COMMAND(ID_HELP_FPCROUTE, OnHelpFpcRoute)
 	ON_COMMAND(ID_HELP_USERGUIDESUPPLEMENT_PDF, OnHelpUserGuideSupplementPdf)
 END_MESSAGE_MAP()
@@ -181,12 +182,12 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 	DDX_Control(pDX, IDC_EDIT1, m_edit_build);
 	if( !pDX->m_bSaveAndValidate )
-	{
+	{// VERSION
 		// incoming
 #ifdef _DEBUG
-		m_edit_build.SetWindowText("2 Debug: 032"/* "$WCREV$ Debug: ($WCDATE$)" */ );
+		m_edit_build.SetWindowText( "2 Debug: 032k"/* "$WCREV$ Debug: ($WCDATE$)" */ );
 #else
-		m_edit_build.SetWindowText( "$WCREV$ Release: ($WCDATE$)" );
+		m_edit_build.SetWindowText( "2 Release: 032k"/* "$WCREV$ Debug: ($WCDATE$)" */ );
 #endif
 	}
 }
@@ -479,6 +480,24 @@ void CFreePcbApp::OnHelpFreeRoutingWebsite()
 {
     SHELLEXECUTEINFO ShExecInfo;
 	CString fn = "https://freerouting.org";
+
+	ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
+	ShExecInfo.fMask = NULL;
+	ShExecInfo.hwnd = NULL;
+	ShExecInfo.lpVerb = NULL;
+	ShExecInfo.lpFile = fn;
+	ShExecInfo.lpParameters = NULL;
+	ShExecInfo.lpDirectory = NULL;
+	ShExecInfo.nShow = SW_MAXIMIZE;
+	ShExecInfo.hInstApp = NULL;
+
+	ShellExecuteEx(&ShExecInfo);
+}
+
+void CFreePcbApp::OnHelpFAQ()
+{
+	SHELLEXECUTEINFO ShExecInfo;
+	CString fn = "https://freepcb.dev/How_to.html";
 
 	ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
 	ShExecInfo.fMask = NULL;

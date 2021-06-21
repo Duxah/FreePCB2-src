@@ -148,6 +148,9 @@ ON_COMMAND(ID_ADHESIVE_EDIT, OnAdhesiveEdit)
 ON_COMMAND(ID_ADHESIVE_MOVE, OnAdhesiveMove)
 ON_COMMAND(ID_ADHESIVE_DELETE, OnAdhesiveDelete)
 ON_COMMAND(ID_CENTROID_ROTATEAXIS, OnCentroidRotateAxis)
+
+ON_UPDATE_COMMAND_UI_RANGE(1, ID_ADD_POLYLINE, OnInvalidate)
+ON_UPDATE_COMMAND_UI_RANGE(ID_ADD_GRAPHICLINE, ID_MAX_NUM_COMMANDS, OnInvalidate)
 END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CFootprintView construction/destruction
@@ -1201,6 +1204,7 @@ void CFootprintView::OnLButtonUp(UINT nFlags, CPoint point)
 				&& p.y == m_fp.m_outline_poly[m_sel_id.i].GetY(0) )
 			{
 				// this point is the start point, close the polyline and quit
+				m_fp.m_outline_poly[m_sel_id.i].SetHatch(CPolyLine::NO_HATCH);
 				m_fp.m_outline_poly[m_sel_id.i].Close( m_polyline_style );
 				SetCursorMode( CUR_FP_NONE_SELECTED );
 				m_dlist->StopDragging();
@@ -2996,6 +3000,8 @@ void CFootprintView::SnapCursorPoint( CPoint wp )
 	{	
 		int grid_spacing;
 		grid_spacing = m_Doc->m_fp_part_grid_spacing;
+		if( grid_spacing == 0 )
+			grid_spacing += 1;
 
 		// snap angle if needed
 		if( m_Doc->m_fp_snap_angle && (wp != m_snap_angle_ref) 
@@ -3404,6 +3410,7 @@ void CFootprintView::OnFootprintFileImport()
 	// now import if OK
 	if( ret == IDOK && dlg.m_footprint_name.GetLength() && dlg.m_shape.m_name.GetLength() )
 	{
+		m_fp.Undraw();
 		m_fp.Import( &dlg.m_shape );
 		m_fp.Draw( m_dlist, m_Doc->m_smfontutil );
 
@@ -3422,6 +3429,7 @@ void CFootprintView::OnFootprintFileImport()
 		SetCursorMode(CUR_FP_GROUP_SELECTED);
 		HighlightGroup();
 		OnGroupMove();
+		Invalidate(0);
 	}
 }
 
@@ -4251,4 +4259,9 @@ void CFootprintView::OnCentroidRotateAxis()
 		m_fp.m_centroid_angle = 0;
 	m_fp.Draw( m_dlist, m_Doc->m_smfontutil );
 	FootprintModified( TRUE );
+}
+
+void CFootprintView::OnInvalidate( CCmdUI * CMD )
+{
+	Invalidate( FALSE );
 }

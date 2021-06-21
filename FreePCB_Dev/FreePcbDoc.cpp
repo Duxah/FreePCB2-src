@@ -128,6 +128,7 @@ BEGIN_MESSAGE_MAP(CFreePcbDoc, CDocument)
 	ON_COMMAND(ID_PROJECT_COMBINEBOARD, OnProjectCombineBoard)
 	ON_COMMAND(ID_FILE_LOADLIBRARYASPROJECT, OnFileLoadLibrary)
 	ON_COMMAND(ID_FILE_SAVEPROJECTASLIBRARY, OnFileSaveLibrary)
+	ON_COMMAND(ID_EDIT_SELECT_ALL, OnEditSelectAll)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -678,6 +679,11 @@ BOOL CFreePcbDoc::FileOpen( LPCTSTR fn, BOOL bLibrary )
 			str.Format( "Reading footprints");
 			pMain->DrawStatus( 3, &str );
 			m_org_changed = ReadOptions( &pcb_file, !m_system_colors );
+			if( m_file_version < 1.3 )
+			{
+				AfxMessageBox("File version too old. Try to save your file to FreePcb-1.3xx and then try again");
+				return FALSE;
+			}
 			m_plist->SetPinAnnularRing( m_annular_ring_pins );
 			m_nlist->SetViaAnnularRing( m_annular_ring_vias );
 			ReadFootprints( &pcb_file );
@@ -706,8 +712,8 @@ BOOL CFreePcbDoc::FileOpen( LPCTSTR fn, BOOL bLibrary )
 			str.Format( "Reading nets");
 			pMain->DrawStatus( 3, &str );
 			int bRatline = m_nlist->ReadNets( &pcb_file, m_file_version );
-			if( bRatline == 0 )
-				m_netlist_completed = TRUE;
+			//if( bRatline == 0 )
+			//	m_netlist_completed = TRUE;
 			UpdateWindow((HWND)m_view->GetActiveWindow());
 			// read Texts
 			str.Format( "Reading texts");
@@ -1367,10 +1373,11 @@ void CFreePcbDoc::OnProjectNetlist()
 	if( ret == IDOK )
 	{
 		ResetUndoState();
+		view->CancelSelection();
+		ProjectModified( TRUE );
 		m_netlist_completed = dlg.m_nl_comp;
 		m_nlist->ImportNetListInfo( dlg.m_nl, 0, NULL, m_trace_w, m_via_w, m_via_hole_w );
-		ProjectModified( TRUE );
-		view->CancelSelection();
+//
 		if( m_vis[LAY_RAT_LINE] && !m_auto_ratline_disable )
 			m_nlist->OptimizeConnections();
 		view->SetMainMenu( TRUE );
@@ -1599,6 +1606,7 @@ void CFreePcbDoc::WriteOutlinesPoly( CStdioFile * file, CArray<CPolyLine> * sm )
 		// solder_mask_cutouts
 		line.Format( "[solder_mask_cutouts]\n\n" );
 		file->WriteString( line );
+		BOOL bWarWasMade = 0;
 		for( int i=0; i<smc->GetSize(); i++ )
 		{
 			int l = (*smc)[i].GetLayer();
@@ -1614,6 +1622,12 @@ void CFreePcbDoc::WriteOutlinesPoly( CStdioFile * file, CArray<CPolyLine> * sm )
 				i--;
 				continue;
 			}
+			if( (*smc)[i].GetNumContours() > 1 )
+				if( bWarWasMade == 0 )
+				{
+					AfxMessageBox("Error. Solder mask cutouts cannot contain interior contours. Move this polyline to the mechanical layer, and save the file again. Or use version 2-033 which supports this feature", MB_ICONERROR );
+					bWarWasMade = 1;
+				}
 			line.Format( "sm_cutout: %d %d %d %d %d\n", ncr,
 				(*smc)[i].GetHatch(), (*smc)[i].GetLayer(), (*smc)[i].GetW(), (*smc)[i].GetMerge() );
 			file->WriteString( line );
@@ -1766,6 +1780,8 @@ void CFreePcbDoc::ReadBoardOutline( CStdioFile * pcb_file, CArray<CPolyLine> * b
 					hatch = my_atoi( &p[3] );
 				hatch = min( 2, hatch );
 				hatch = max( 0, hatch );
+				if( hatch == CPolyLine::DIAGONAL_FULL )
+					hatch = CPolyLine::NO_HATCH;
 				int merge = -1;
 				if ( np >= 6 )
 					merge = my_atoi( &p[4] );
@@ -1848,6 +1864,7 @@ void CFreePcbDoc::ReadBoardOutline( CStdioFile * pcb_file, CArray<CPolyLine> * b
 //
 // throws CString * exception on error
 //
+
 void CFreePcbDoc::ReadSolderMaskCutouts( CStdioFile * pcb_file, CArray<CPolyLine> * ssm )
 {
 	int err, pos, np;
@@ -1879,7 +1896,7 @@ void CFreePcbDoc::ReadSolderMaskCutouts( CStdioFile * pcb_file, CArray<CPolyLine
 
 		if( in_str != "[solder_mask_cutouts]" )
 		{
-			pcb_file->Seek( pos, CFile::begin );
+			pcb_file->Seek(pos,CFile::begin);
 			return;
 		}
 
@@ -1919,8 +1936,12 @@ void CFreePcbDoc::ReadSolderMaskCutouts( CStdioFile * pcb_file, CArray<CPolyLine
 				int merge = -1;
 				if ( np >= 6 )
 					merge = my_atoi( &p[4] );
+				//int s_merge = -1;
+				//if ( np >= 7 )
+				//	s_merge = my_atoi( &p[5] );
 				int ic = sm->GetSize();
 				sm->SetSize(ic+1);
+				int n_cont=0, last_n_cont=0, i_start=0;
 				for( int icor=0; icor<ncorners; icor++ )
 				{
 					err = pcb_file->ReadString( in_str );
@@ -1935,19 +1956,31 @@ void CFreePcbDoc::ReadSolderMaskCutouts( CStdioFile * pcb_file, CArray<CPolyLine
 						CString * err_str = new CString( "error parsing [solder_mask_cutouts] section of project file" );//throw
 						throw err_str;
 					}
+					// end contour
+					if( np >= 6 )
+						n_cont = my_atoi( &p[4] );
+					else
+						n_cont = 0;
+					if( last_n_cont != n_cont && icor > i_start+2 )
+					{
+						(*sm)[ic].Close( last_side_style, 0 );
+						i_start = icor;
+					}
+					//
 					int ncor = my_atoi( &p[0] );
 					if( (ncor-1) != icor )
 					{
 						CString * err_str = new CString( "error parsing [solder_mask_cutouts] section of project file" );//throw
 						throw err_str;
 					}
+
 					int x = my_atoi( &p[1] );
 					int y = my_atoi( &p[2] );
 					id id_sm( ID_POLYLINE, ID_SM_CUTOUT, ic );
 					if( icor == 0 )
 					{
 						// make new cutout 
-						(*sm)[ic].Start( lay, wid, 10*NM_PER_MIL, x, y, hatch, &id_sm, NULL );
+						(*sm)[ic].Start( lay, wid, 20*NM_PER_MIL, x, y, hatch, &id_sm, NULL );
 						if( ssm )
 							(*sm)[ic].SetDisplayList( NULL );
 						else
@@ -1959,6 +1992,7 @@ void CFreePcbDoc::ReadSolderMaskCutouts( CStdioFile * pcb_file, CArray<CPolyLine
 						last_side_style = my_atoi( &p[3] );
 					else
 						last_side_style = CPolyLine::STRAIGHT;
+					last_n_cont = n_cont;
 					if( icor == (ncorners-1) )
 					{
 						(*sm)[ic].Close( last_side_style );
@@ -3545,8 +3579,12 @@ void CFreePcbDoc::PartProperties()
 	int mem_py = m_view->m_sel_part->y;
 	cpart * mp = m_view->m_sel_part;
 	CString msh = "";
-	if( mp->shape )
+	CShape sh;
+	if( m_view->m_sel_part->shape )
+	{
 		msh = mp->shape->m_name;
+		sh.Copy( mp->shape );
+	}
 	partlist_info pl;
 	int ip = m_plist->ExportPartListInfo( &pl, m_view->m_sel_part );
 	CDlgAddPart dlg;
@@ -3635,7 +3673,12 @@ void CFreePcbDoc::PartProperties()
 		// see if ref_des has changed
 		m_plist->ImportPartListInfo( &pl, 0 );
 		if( m_view->m_sel_part->shape )
+		{
+			if( m_view->m_sel_part->shape->m_name.Compare( msh ) == 0 )
+				if( m_view->m_sel_part->shape->Compare( &sh ) == 0 )
+					ResetUndoState(); // footprint was replaced
 			m_view->m_sel_part->shape->m_package = dlg.m_package;
+		}
 		m_dlist->CancelHighLight();
 		m_view->HighlightGroup();
 		if( dlg.GetDragFlag() )
@@ -4202,7 +4245,7 @@ int CFreePcbDoc::ImportNetlist( CStdioFile * file, UINT flags,
 							if( pin_cstr.GetLength() > 3 )
 							{
 								int dot = pin_cstr.Find( ".", 0 );
-								if( dot )
+								if( dot > 0 && dot < (pin_cstr.GetLength()-1) )
 								{
 									CString ref_des = pin_cstr.Left( dot );
 									CString pin_num_cstr = pin_cstr.Right( pin_cstr.GetLength()-dot-1 );
@@ -4513,7 +4556,7 @@ int CFreePcbDoc::ImportPADSPCBNetlist( CStdioFile * file, UINT flags,
 				if( pin_cstr.GetLength() > 3 )
 				{
 					int dot = pin_cstr.Find( ".", 0 );
-					if( dot )
+					if( dot > 0 && dot < (pin_cstr.GetLength()-1) )
 					{
 						if( pin_map.Lookup( pin_cstr, ptr ) )
 						{
@@ -4680,16 +4723,18 @@ void CFreePcbDoc::OutlinePolyUndoCallback( int type, void * ptr, BOOL undo )
 				{					
 					if( corner[ic].num_contour != corner[ic-1].num_contour )
 					{
-						poly->Close( corner[ic-1].style );
+						poly->Close( corner[ic-1].style, 0, 0 );
 						ic_start = ic;
-						poly->AppendCorner( corner[ic].x, corner[ic].y, NULL );
+						poly->AppendCorner( corner[ic].x, corner[ic].y, NULL, 0 );
 					}
 					else
-						poly->AppendCorner( corner[ic].x, corner[ic].y, corner[ic-1].style );
+						poly->AppendCorner( corner[ic].x, corner[ic].y, corner[ic-1].style, 0 );
 				}
 				if( undo_poly->closed )
-					poly->Close( corner[undo_poly->ncorners-1].style );
+					poly->Close( corner[undo_poly->ncorners-1].style, 0 );
 				poly->SetMerge( undo_poly->merge_name );
+				if( poly->bDrawn == 0 )
+					poly->Draw();
 			}
 		}
 	}
@@ -4871,6 +4916,8 @@ void CFreePcbDoc::OnProjectOptions()
 		m_view->CancelSelection();
 		ProjectModified( TRUE );
 		ResetUndoState();
+		for( cpart * p=m_plist->GetFirstPart(); p; p=m_plist->GetNextPart(p) )
+			m_plist->DrawPart(p);
 	}
 }
 
@@ -6149,6 +6196,14 @@ void CFreePcbDoc::ProjectCombineBoard( int layer )
 
 void CFreePcbDoc::OnProjectCombineNets()
 {
+	if( m_project_modified && m_netlist_completed == 0 )
+	{
+		CString mess;
+		mess.Format( "This operation has no undo action! Do you want to save the file before doing this?" );
+		int ret = AfxMessageBox( mess, MB_YESNO );
+		if( ret == IDYES )
+			OnFileSave();
+	}
 	ProjectCombineNets(m_nlist);
 }
 
@@ -6164,9 +6219,9 @@ void CFreePcbDoc::ProjectCombineNets( CNetList * nl )
 			CDlgMyMessageBox dlg;
 			dlg.Initialize( str );
 			dlg.DoModal();
-			m_view->g_bShow_nl_lock_Warning = !dlg.bDontShowBoxState;
-			return;
+			m_view->g_bShow_nl_lock_Warning = !dlg.bDontShowBoxState;	
 		}
+		return;
 	}
 	CDlgNetCombine dlg;
 	dlg.Initialize( nl, m_plist );
@@ -6240,8 +6295,8 @@ void CFreePcbDoc::ProjectCombineNets( CNetList * nl )
 		//
 		//
 		m_nlist->ImportNetListInfo( &nl_info, 0, m_dlg_log, 0, 0, 0 );
-		m_import_flags = IMPORT_PARTS | IMPORT_NETS | KEEP_TRACES | KEEP_STUBS | KEEP_AREAS	| KEEP_PARTS_AND_CON;
-		m_nlist->RestoreConnectionsAndAreas( old_nlist, m_import_flags, m_dlg_log );
+		int flags = IMPORT_PARTS | IMPORT_NETS | KEEP_TRACES | KEEP_STUBS | KEEP_AREAS	| KEEP_PARTS_AND_CON;
+		m_nlist->RestoreConnectionsAndAreas( old_nlist, flags, m_dlg_log );
 		old_nlist->SetPartList( NULL );
 		delete old_nlist;
 	}

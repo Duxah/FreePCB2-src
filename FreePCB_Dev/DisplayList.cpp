@@ -662,7 +662,7 @@ void CDisplayList::Draw( CDC * dDC, int draw_layer )
 				if( el->transparent == TRANSPARENT_BLACK_GROUND )
 				{
 					pDC->SetROP2(old_ROP2);
-					CPen TBlack__pen( PS_SOLID, el->el_w*7, CLR_BACKGND );
+					CPen TBlack__pen( PS_SOLID, el->el_w*7, RGB( m_rgb[LAY_SELECTION][0], m_rgb[LAY_SELECTION][1], m_rgb[LAY_SELECTION][2] ) );
 					pDC->SelectObject( TBlack__pen );
 					for( int ii=0; ii<sz; ii+=2 )
 					{

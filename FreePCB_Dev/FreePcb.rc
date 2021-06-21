@@ -232,7 +232,7 @@ BEGIN
         MENUITEM "Repeat &DRC\tCtrl+D",         ID_TOOLS_REPEATDRC
         MENUITEM "Clear DRC Errors",            ID_TOOLS_CLEAR_DRC
     END
-    POPUP "Aligns", GRAYED
+    POPUP "Align", GRAYED
     BEGIN
         MENUITEM "By Previous X",               ID_ALIGN_X
         MENUITEM "By Previous Y",               ID_ALIGN_Y
@@ -253,7 +253,8 @@ BEGIN
     END
     POPUP "&Help"
     BEGIN
-        MENUITEM "FreePCB User Guide (PDF)",    32893
+		MENUITEM "FAQ",							ID_HELP_FAQ
+        MENUITEM "FreePCB User Guide (PDF)",    ID_HELP_USERGUIDE_PDF
         MENUITEM "FreePCB User Guide Supplement (PDF)", ID_HELP_USERGUIDESUPPLEMENT_PDF
         MENUITEM "FpcROUTE User Guide (PDF)",   ID_HELP_FPCROUTE
         MENUITEM SEPARATOR
@@ -733,6 +734,7 @@ BEGIN
     "D",            ID_TOOLS_REPEATDRC,     VIRTKEY, CONTROL, NOINVERT
     "G",            ID_FILE_GENERATECADFILES, VIRTKEY, CONTROL, NOINVERT
     "F",            ID_RUN_INFO_BOX,        VIRTKEY, CONTROL, NOINVERT
+	"A",			ID_EDIT_SELECT_ALL,		VIRTKEY, CONTROL, NOINVERT
 END
 
 

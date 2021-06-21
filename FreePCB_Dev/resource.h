@@ -917,6 +917,7 @@
 #define ID_PRINT                        32890
 #define ID_PRINT_BUTTON                 32890
 #define ID_BUTTON32891                  32891
+#define ID_HELP_FAQ						32892
 #define ID_HELP_USERGUIDE_PDF           32893
 #define ID_TOOLS_MOVEORIGIN_FP          32895
 #define ID_NONE_MOVEORIGIN              32896

@@ -1,17 +1,113 @@
-﻿Построение начато 05.07.2020 3:38:22.
-     1>Проект "C:\Users\Duxah\Desktop\Duxah\FreePcbDoc\FreePCB_Dev2032\FreePCB_Dev\FreePcb.vcxproj" в узле 2 (целевые объекты build).
+﻿Построение начато 20.11.2020 18:28:17.
+     1>Проект "C:\Рабочая папка\FreePCB_Dev2032\FreePCB_Dev\FreePcb.vcxproj" в узле 2 (целевые объекты build).
      1>InitializeBuildStatus:
-         Создание ".\Debug\FreePcb.unsuccessfulbuild", так как было задано "AlwaysCreate".
+         Обращение к ".\Debug\FreePcb.unsuccessfulbuild".
        ClCompile:
-         Для всех выходных данных обновления не требуется.
-         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I./include /ZI /nologo /W1 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _VC80_UPGRADE=0x0710 /D _MBCS /D _AFXDLL /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp".\Debug/FreePcb.pch" /Fo".\Debug/" /Fd".\Debug/vc100.pdb" /FR".\Debug\\" /Gd /TP /analyze- /errorReport:prompt DlgAddPart.cpp /D "_CRT_SECURE_NO_DEPRECATE" 
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I./include /ZI /nologo /W1 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _VC80_UPGRADE=0x0710 /D _MBCS /D _AFXDLL /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp".\Debug/FreePcb.pch" /Fo".\Debug/" /Fd".\Debug/vc100.pdb" /FR".\Debug\\" /Gd /TP /analyze- /errorReport:prompt StdAfx.cpp /D "_CRT_SECURE_NO_DEPRECATE" 
+         StdAfx.cpp
+     1>c:\рабочая папка\freepcb_dev2032\freepcb_dev\stdafx.h(58): warning C4005: ASSERT: изменение макроопределения
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\atlmfc\include\afx.h(333): см. предыдущее определение "ASSERT"
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I./include /ZI /nologo /W1 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _VC80_UPGRADE=0x0710 /D _MBCS /D _AFXDLL /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp".\Debug/FreePcb.pch" /Fo".\Debug/" /Fd".\Debug/vc100.pdb" /FR".\Debug\\" /Gd /TP /analyze- /errorReport:prompt afxasert.cpp Cuid.cpp DesignRules.cpp DisplayList.cpp DlgAddArea.cpp DlgAddMaskCutout.cpp DlgAddMerge.cpp DlgAddNet.cpp DlgAddPart.cpp DlgAddPin.cpp DlgAddPoly.cpp DlgAddText.cpp DlgAddWidth.cpp DlgAreaLayer.cpp DlgAssignNet.cpp DlgCAD.cpp DlgCentroid.cpp DlgChangeLayer.cpp DlgChooseNetName.cpp DlgDRC.cpp DlgDupFootprintName.cpp DlgEditBoardCorner.cpp DlgEditNet.cpp DlgExportDsn.cpp DlgFindPart.cpp DlgFpRefText.cpp DlgFpText.cpp DlgGlue.cpp DlgGroupPaste.cpp DlgHole.cpp DlgImportFootprint.cpp DlgImportOptions.cpp DlgImportSes.cpp DlgIndexing.cpp DlgIvex.cpp DlgLayers.cpp DlgLibraryManager.cpp DlgLog.cpp DlgMoveOrigin.cpp DlgMyMessageBox.cpp DlgMyMessageBox2.cpp DlgNetCombine.cpp DlgNetlist.cpp DlgPartlist.cpp DlgProjectOptions.cpp DlgReassignLayers.cpp DlgRefText.cpp DlgReport.cpp DlgSaveFootprint.cpp DlgSaveLib.cpp DlgSetAreaHatch.cpp DlgSetSegmentWidth.cpp DlgSetTraceWidths.cpp DlgShortcuts.cpp DlgSideStyle.cpp DlgSlot.cpp DlgValueText.cpp DlgVia.cpp DlgWizQuad.cpp file_io.cpp FootprintLib.cpp FootprintView.cpp FreePcb.cpp FreePcbDoc.cpp FreePcbView.cpp Gerber.cpp gpc_232.cpp ivex_mod_file.cpp MainFrm.cpp MyToolBar.cpp Net_iter.cpp NetList.cpp PartList.cpp PathDialog.cpp php_polygon.cpp php_polygon_vertex.cpp PolyLine.cpp QAFDebug.cpp RTcall.cpp Shape.cpp smcharacter.cpp smfontutil.cpp TextList.cpp UndoList.cpp utility.cpp /D "_CRT_SECURE_NO_DEPRECATE" 
+         afxasert.cpp
+         Cuid.cpp
+         DesignRules.cpp
+         DisplayList.cpp
+         DlgAddArea.cpp
+         DlgAddMaskCutout.cpp
+         DlgAddMerge.cpp
+         DlgAddNet.cpp
          DlgAddPart.cpp
+         DlgAddPin.cpp
+         DlgAddPoly.cpp
+         DlgAddText.cpp
+         DlgAddWidth.cpp
+         DlgAreaLayer.cpp
+         DlgAssignNet.cpp
+         DlgCAD.cpp
+         DlgCentroid.cpp
+         DlgChangeLayer.cpp
+         DlgChooseNetName.cpp
+         DlgDRC.cpp
+         Создание кода...
+         Компиляция...
+         DlgDupFootprintName.cpp
+         DlgEditBoardCorner.cpp
+         DlgEditNet.cpp
+         DlgExportDsn.cpp
+         DlgFindPart.cpp
+         DlgFpRefText.cpp
+         DlgFpText.cpp
+         DlgGlue.cpp
+         DlgGroupPaste.cpp
+         DlgHole.cpp
+         DlgImportFootprint.cpp
+         DlgImportOptions.cpp
+         DlgImportSes.cpp
+         DlgIndexing.cpp
+         DlgIvex.cpp
+         DlgLayers.cpp
+         DlgLibraryManager.cpp
+         DlgLog.cpp
+         DlgMoveOrigin.cpp
+         DlgMyMessageBox.cpp
+         Создание кода...
+         Компиляция...
+         DlgMyMessageBox2.cpp
+         DlgNetCombine.cpp
+         DlgNetlist.cpp
+         DlgPartlist.cpp
+         DlgProjectOptions.cpp
+         DlgReassignLayers.cpp
+         DlgRefText.cpp
+         DlgReport.cpp
+         DlgSaveFootprint.cpp
+         DlgSaveLib.cpp
+         DlgSetAreaHatch.cpp
+         DlgSetSegmentWidth.cpp
+         DlgSetTraceWidths.cpp
+         DlgShortcuts.cpp
+         DlgSideStyle.cpp
+         DlgSlot.cpp
+         DlgValueText.cpp
+         DlgVia.cpp
+         DlgWizQuad.cpp
+         file_io.cpp
+         Создание кода...
+         Компиляция...
+         FootprintLib.cpp
+         FootprintView.cpp
+         FreePcb.cpp
+         FreePcbDoc.cpp
+         FreePcbView.cpp
+         Gerber.cpp
+         gpc_232.cpp
+         ivex_mod_file.cpp
+         MainFrm.cpp
+         MyToolBar.cpp
+         Net_iter.cpp
+         NetList.cpp
+         PartList.cpp
+         PathDialog.cpp
+         php_polygon.cpp
+         php_polygon_vertex.cpp
+         PolyLine.cpp
+         QAFDebug.cpp
+         RTcall.cpp
+         Shape.cpp
+         Создание кода...
+         Компиляция...
+         smcharacter.cpp
+         smfontutil.cpp
+         TextList.cpp
+         UndoList.cpp
+         utility.cpp
+         Создание кода...
        ResourceCompile:
          Для всех выходных данных обновления не требуется.
        ManifestResourceCompile:
          Для всех выходных данных обновления не требуется.
        Link:
-         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:".\Debug/FreePcb.exe" /VERSION:"1.109" /INCREMENTAL /NOLOGO /LIBPATH:./libs/Debug winmm.lib rpcrt4.lib clibpdf.lib /MANIFEST /ManifestFile:".\Debug\FreePcb.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:".\Debug/FreePcb.pdb" /MAP /SUBSYSTEM:WINDOWS /STACK:"100000000" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\Debug\FreePcb.lib" /MACHINE:X86 .\Debug\FreePcb.res
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:".\Debug/FreePcb.exe" /VERSION:"1.109" /INCREMENTAL /NOLOGO /LIBPATH:./libs/Debug winmm.lib rpcrt4.lib clibpdf.lib /MANIFEST /ManifestFile:".\Debug\FreePcb.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:".\Debug/FreePcb.pdb" /MAP /SUBSYSTEM:WINDOWS /STACK:"100000000" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\Debug\FreePcb.lib" /MACHINE:X86 .\Debug\FreePcb.res
          .\Debug\FreePcb.exe.embed.manifest.res
          .\Debug/afxasert.obj
          .\Debug/Cuid.obj
@@ -100,18 +196,18 @@
          .\Debug/UndoList.obj
          .\Debug/utility.obj /MACHINE:I386 
        Manifest:
-         c:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:".\Debug\FreePcb.exe.embed.manifest" /manifest .\Debug\FreePcb.exe.intermediate.manifest "c:\Program Files\Microsoft Visual Studio 10.0\VC\Include\Manifest\dpiaware.manifest"
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:".\Debug\FreePcb.exe.embed.manifest" /manifest .\Debug\FreePcb.exe.intermediate.manifest "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\Include\Manifest\dpiaware.manifest"
          Для всех выходных данных обновления не требуется.
        LinkEmbedManifest:
          Для всех выходных данных обновления не требуется.
-         FreePcb.vcxproj -> C:\Users\Duxah\Desktop\Duxah\FreePcbDoc\FreePCB_Dev2032\FreePCB_Dev\.\Debug\FreePcb.exe
+         FreePcb.vcxproj -> C:\Рабочая папка\FreePCB_Dev2032\FreePCB_Dev\.\Debug\FreePcb.exe
        BscMake:
-         Для всех выходных данных обновления не требуется.
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\bscmake.exe /nologo /o".\Debug\FreePcb.bsc" .\Debug\afxasert.sbr .\Debug\Cuid.sbr .\Debug\DesignRules.sbr .\Debug\DisplayList.sbr .\Debug\DlgAddArea.sbr .\Debug\DlgAddMaskCutout.sbr .\Debug\DlgAddMerge.sbr .\Debug\DlgAddNet.sbr .\Debug\DlgAddPart.sbr .\Debug\DlgAddPin.sbr .\Debug\DlgAddPoly.sbr .\Debug\DlgAddText.sbr .\Debug\DlgAddWidth.sbr .\Debug\DlgAreaLayer.sbr .\Debug\DlgAssignNet.sbr .\Debug\DlgCAD.sbr .\Debug\DlgCentroid.sbr .\Debug\DlgChangeLayer.sbr .\Debug\DlgChooseNetName.sbr .\Debug\DlgDRC.sbr .\Debug\DlgDupFootprintName.sbr .\Debug\DlgEditBoardCorner.sbr .\Debug\DlgEditNet.sbr .\Debug\DlgExportDsn.sbr .\Debug\DlgFindPart.sbr .\Debug\DlgFpRefText.sbr .\Debug\DlgFpText.sbr .\Debug\DlgGlue.sbr .\Debug\DlgGroupPaste.sbr .\Debug\DlgHole.sbr .\Debug\DlgImportFootprint.sbr .\Debug\DlgImportOptions.sbr .\Debug\DlgImportSes.sbr .\Debug\DlgIndexing.sbr .\Debug\DlgIvex.sbr .\Debug\DlgLayers.sbr .\Debug\DlgLibraryManager.sbr .\Debug\DlgLog.sbr .\Debug\DlgMoveOrigin.sbr .\Debug\DlgMyMessageBox.sbr .\Debug\DlgMyMessageBox2.sbr .\Debug\DlgNetCombine.sbr .\Debug\DlgNetlist.sbr .\Debug\DlgPartlist.sbr .\Debug\DlgProjectOptions.sbr .\Debug\DlgReassignLayers.sbr .\Debug\DlgRefText.sbr .\Debug\DlgReport.sbr .\Debug\DlgSaveFootprint.sbr .\Debug\DlgSaveLib.sbr .\Debug\DlgSetAreaHatch.sbr .\Debug\DlgSetSegmentWidth.sbr .\Debug\DlgSetTraceWidths.sbr .\Debug\DlgShortcuts.sbr .\Debug\DlgSideStyle.sbr .\Debug\DlgSlot.sbr .\Debug\DlgValueText.sbr .\Debug\DlgVia.sbr .\Debug\DlgWizQuad.sbr .\Debug\file_io.sbr .\Debug\FootprintLib.sbr .\Debug\FootprintView.sbr .\Debug\FreePcb.sbr .\Debug\FreePcbDoc.sbr .\Debug\FreePcbView.sbr .\Debug\Gerber.sbr .\Debug\gpc_232.sbr .\Debug\ivex_mod_file.sbr .\Debug\MainFrm.sbr .\Debug\MyToolBar.sbr .\Debug\Net_iter.sbr .\Debug\NetList.sbr .\Debug\PartList.sbr .\Debug\PathDialog.sbr .\Debug\php_polygon.sbr .\Debug\php_polygon_vertex.sbr .\Debug\PolyLine.sbr .\Debug\QAFDebug.sbr .\Debug\RTcall.sbr .\Debug\Shape.sbr .\Debug\smcharacter.sbr .\Debug\smfontutil.sbr .\Debug\StdAfx.sbr .\Debug\TextList.sbr .\Debug\UndoList.sbr .\Debug\utility.sbr
        FinalizeBuildStatus:
          Файл ".\Debug\FreePcb.unsuccessfulbuild" удаляется.
          Обращение к ".\Debug\FreePcb.lastbuildstate".
-     1>Построение проекта "C:\Users\Duxah\Desktop\Duxah\FreePcbDoc\FreePCB_Dev2032\FreePCB_Dev\FreePcb.vcxproj" завершено (целевые объекты build).
+     1>Построение проекта "C:\Рабочая папка\FreePCB_Dev2032\FreePCB_Dev\FreePcb.vcxproj" завершено (целевые объекты build).
 
 Построение успешно завершено.
 
-Затраченное время: 00:00:09.10
+Затраченное время: 00:00:23.44

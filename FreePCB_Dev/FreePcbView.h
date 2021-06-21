@@ -626,7 +626,7 @@ public:
 	HBITMAP m_old_bitmap2;
 	CRect m_bitmap_rect1;
 	CRect m_bitmap_rect2;
-	int m_draw_layer;
+	int m_draw_layer; 
 
 // Operations
 public:
@@ -738,7 +738,7 @@ public:
 	void OnGroupPaste( BOOL bwDialog, BOOL bSaveMerges=0 );
 	void OnInfoBoxMess( int command, int n_str, CArray<CString> *str );
 	CWnd * OnInfoBoxSendMess( CString mess );
-
+	   
 	
 	// check mode
 	BOOL CurNone();
@@ -938,6 +938,7 @@ public:
 	afx_msg void OnSetOriginToSelectedItem();
 	void SetOriginToSelectedItem();
 	void ProjectRunInfoBox();
+	afx_msg void OnRangeCmds( CCmdUI * CMD );
 };
 
 #ifndef _DEBUG  // debug version in FreePcbView.cpp

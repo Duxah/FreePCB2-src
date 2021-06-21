@@ -1759,7 +1759,7 @@ void CPolyLine::Hatch()
 			double wid = max(0,m_w);
 			if( m_hatch == DIAGONAL_EDGE )
 				wid = min(wid,NM_PER_MIL*4);
-			double min_dxy = wid*0.01;
+			double min_dxy = wid*0.007;
 			for( int ip=0; ip<npts; ip+=2 )
 			{
 				id hatch_id = m_id;

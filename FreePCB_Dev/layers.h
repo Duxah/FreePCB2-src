@@ -6,7 +6,7 @@
 
 enum
 {
-	// layout layers
+	// layout layers 
 	LAY_SELECTION = 0,
 	LAY_BACKGND,
 	LAY_VISIBLE_GRID,

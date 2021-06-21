@@ -121,6 +121,10 @@ void CText::Draw( CDisplayList * dlist, SMFontUtil * smfontutil, CArray<CPoint> 
 		if( dlist )
 		{
 			// create selection rectangle
+			if( sel.left == INT_MAX )
+			{
+				sel = rect( 0,0,NM_PER_MIL*4,NM_PER_MIL*4 );
+			}
 			MoveRect( &sel, m_x, m_y );
 			SwellRect( &sel, m_stroke_width/2 );
 			int width = xc - 8.0*x_scale;
@@ -145,6 +149,13 @@ void CText::Draw( CDisplayList * dlist, SMFontUtil * smfontutil, CArray<CPoint> 
 			// draw it
 			id.st = ID_TXT;
 			id.i = 0;
+			if( m_stroke->GetSize() == 0 )
+			{
+				m_stroke->Add( pts[0] );
+				m_stroke->Add( pts[2] );
+				m_stroke->Add( pts[1] );
+				m_stroke->Add( pts[3] );
+			}
 			if( getbit(l_map,LAY_PAD_THRU))
 				dl_sel = NULL;
 			else
@@ -460,6 +471,21 @@ void CTextList::ReadTexts( CStdioFile * pcb_file, double read_version )
 				{
 					t->Undraw();
 					t->Draw(m_dlist,m_smfontutil);
+					if( read_version < 2.0 && t->m_mirror )
+					{
+						RECT tr;
+						GetTextRectOnPCB(t,&tr);
+						if( t->m_angle == 0 )
+							t->m_x += (tr.right-tr.left);
+						else if( t->m_angle == 90 )
+							t->m_y -= (tr.top-tr.bottom);
+						else if( t->m_angle == 180 )
+							t->m_x -= (tr.right-tr.left);
+						else if( t->m_angle == 270 )
+							t->m_y += (tr.top-tr.bottom);
+						t->Undraw();
+						t->Draw(m_dlist,m_smfontutil);
+					}
 				}
 			}
 			sz = 0;
@@ -474,6 +500,21 @@ void CTextList::ReadTexts( CStdioFile * pcb_file, double read_version )
 				{
 					t->Undraw();
 					t->Draw(m_dlist,m_smfontutil);
+					if( read_version < 2.0 && t->m_mirror )
+					{
+						RECT tr;
+						GetTextRectOnPCB(t,&tr);
+						if( t->m_angle == 0 )
+							t->m_x += (tr.right-tr.left);
+						else if( t->m_angle == 90 )
+							t->m_y -= (tr.top-tr.bottom);
+						else if( t->m_angle == 180 )
+							t->m_x -= (tr.right-tr.left);
+						else if( t->m_angle == 270 )
+							t->m_y += (tr.top-tr.bottom);
+						t->Undraw();
+						t->Draw(m_dlist,m_smfontutil);
+					}
 				}
 			}
 			t = NULL;

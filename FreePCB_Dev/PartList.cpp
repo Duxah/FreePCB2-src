@@ -2787,8 +2787,7 @@ undo_part * CPartList::CreatePartUndoRecord( cpart * part, CString * new_ref_des
 	int size = sizeof( undo_part );
 	if( part )
 	{
-		if( part->shape )
-			NumPins = part->shape->GetNumPins();
+		NumPins = part->pin.GetSize();
 		size = sizeof( undo_part ) + NumPins*(CShape::MAX_PIN_NAME_SIZE+1);
 	}
 	undo_part * upart = (undo_part*)malloc( size );
@@ -3394,9 +3393,33 @@ void CPartList::PartUndoCallback( int type, void * ptr, BOOL undo )
 			part->m_value_angle = upart->m_value_angle;
 			part->m_value_size = upart->m_value_size;
 			part->m_value_w = upart->m_value_w;
+			char * chptr = (char*)ptr + sizeof( undo_part );
+			if( part->shape )
+			{
+				for( int ip=0; ip<part->shape->GetNumPins(); ip++ )
+				{
+					if( *chptr != 0 )
+					{
+						CString net_name = chptr;
+						cnet * net = pl->m_nlist->GetNetPtrByName( &net_name );
+						if( net == NULL )
+							net = pl->m_nlist->AddNet( net_name, 0, 0, 0 );
+						part->pin[ip].net = net;
+						if( net )
+						{
+							int ni = pl->m_nlist->GetNetPinIndex( net, &ref_des, &part->shape->m_padstack[ip].name );
+							if( ni == -1 )
+								pl->m_nlist->AddNetPin( net, &ref_des, &part->shape->m_padstack[ip].name, FALSE );
+						}
+					}
+					else
+						part->pin[ip].net = NULL;
+					chptr += MAX_NET_NAME_SIZE + 1;
+				}
+			}
 			pl->m_dlist = old_dlist;	// turn drawing back on;
 			pl->DrawPart( part );
-			pl->m_nlist->PartAdded( part );
+			//
 		}
 		else if( part && type == UNDO_PART_MODIFY )
 		{

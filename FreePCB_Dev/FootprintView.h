@@ -425,7 +425,7 @@ public:
 	afx_msg void OnFootprintFileSaveAs();
 	afx_msg void OnAddPolyline();
 	void AddPolyline( id * m_id=NULL );
-	afx_msg void OnFootprintFileImport();
+	afx_msg void OnFootprintFileImport();  
 	afx_msg void OnFootprintFileClose();
 	afx_msg void OnFootprintFileNew();
 	afx_msg void OnViewEntireFootprint();
@@ -454,6 +454,7 @@ public:
 	afx_msg void OnAdhesiveDrag();
 	afx_msg void OnAdhesiveDelete();
 	afx_msg void OnCentroidRotateAxis();
+	afx_msg void OnInvalidate( CCmdUI * CMD );
 };
 
 #ifndef _DEBUG  // debug version

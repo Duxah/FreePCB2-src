@@ -237,6 +237,40 @@ void CDlgAddPart::DoDataExchange(CDataExchange* pDX)
 					origin_moved_Y = yp2 - yp1;
 				}
 			}
+
+
+			// check number of pins, unless new part or no old shape
+			if( !m_new_part && (*m_pl)[m_ip].shape )
+			{
+				int n_new_pins = m_shape.m_padstack.GetSize();
+				if( m_shape.m_name.Compare( "EMPTY_SHAPE" ) == 0 )
+					n_new_pins = INT_MAX;
+				if( n_new_pins < n_old_pins )
+				{
+					CString mess;
+					int ret;
+					if( !m_n_list_locked )
+					{
+						mess.Format( "Warning: %s has fewer pins than %s\nDo you really want to replace it ? ",
+							foot_str, (*m_pl)[m_ip].shape->m_name );
+						ret = AfxMessageBox( mess, MB_YESNO );
+					}
+					else
+					{
+						mess.Format( "Warning: %s has fewer pins than %s,and since the netlist is protected, no continuation is possible. \n(Unlock netlist: Project -> Nets -> Netlist_Protected)",
+							foot_str, (*m_pl)[m_ip].shape->m_name );
+						ret = AfxMessageBox( mess, MB_OK );
+					}
+					if( ret != IDYES)
+					{
+						//m_edit_footprint.SetWindowText( (*m_pl)[m_ip].shape->m_name ); bag
+						//m_edit_package.SetWindowText( (*m_pl)[m_ip].shape->m_package ); bag
+						pDX->Fail();
+					}
+				}
+			}
+
+
 			if( bInCache )
 			{
 				// footprint with the same name is already in the local cache
@@ -341,34 +375,6 @@ void CDlgAddPart::DoDataExchange(CDataExchange* pDX)
 			new_shape->origin_moved_X = origin_moved_X;
 			new_shape->origin_moved_Y = origin_moved_Y;
 
-			// check number of pins, unless new part or no old shape
-			if( !m_new_part && (*m_pl)[m_ip].shape )
-			{
-				int n_new_pins = new_shape->m_padstack.GetSize();
-				if( n_new_pins < n_old_pins )
-				{
-					CString mess;
-					int ret;
-					if( !m_n_list_locked )
-					{
-						mess.Format( "Warning: %s has fewer pins than %s\nDo you really want to replace it ? ",
-							foot_str, (*m_pl)[m_ip].shape->m_name );
-						ret = AfxMessageBox( mess, MB_YESNO );
-					}
-					else
-					{
-						mess.Format( "Warning: %s has fewer pins than %s,and since the netlist is protected, no continuation is possible. \n(Unlock netlist: Project -> Nets -> Netlist_Protected)",
-							foot_str, (*m_pl)[m_ip].shape->m_name );
-						ret = AfxMessageBox( mess, MB_OK );
-					}
-					if( ret != IDYES)
-					{
-						m_edit_footprint.SetWindowText( (*m_pl)[m_ip].shape->m_name );
-						m_edit_package.SetWindowText( (*m_pl)[m_ip].shape->m_package );
-						pDX->Fail();
-					}
-				}
-			}
 			if( m_new_part )
 			{
 				// if new part, add entry to partlist_info

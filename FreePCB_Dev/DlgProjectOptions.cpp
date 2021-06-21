@@ -422,6 +422,10 @@ void CDlgProjectOptions::OnBnClickedButtonDelete()
 		AfxMessageBox( "no menu item selected" );
 	else
 		m_list_menu.DeleteItem( i_sel );
+	//
+	//
+	if( i_sel > 0 )
+		m_list_menu.SetItemState( i_sel-1, LVIS_SELECTED, LVIS_SELECTED );
 }
 
 void CDlgProjectOptions::OnEnChangeEditName()
